@@ -59,6 +59,18 @@ class Hospital(Base):
 
     name = Column(String(100), nullable=False)
 
+    email = Column(
+        String(150),
+        unique=True,
+        nullable=False,
+        index=True
+    )
+
+    password = Column(
+        String(255),
+        nullable=False
+    )
+
     phone = Column(String(20))
 
     city = Column(String(100))

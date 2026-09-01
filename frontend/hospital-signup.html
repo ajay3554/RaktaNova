@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Hospital Signup - LifeLink AI</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🩸 LifeLink AI
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <section class="dashboard">
+
+        <h2>
+            🏥 Hospital Registration
+        </h2>
+
+
+        <div class="card">
+
+            <h3>
+                Create Hospital Account
+            </h3>
+
+            <p>
+                Register your hospital to manage blood requests.
+            </p>
+
+
+            <!-- HOSPITAL NAME -->
+
+            <label>
+                Hospital Name
+            </label>
+
+            <input
+                type="text"
+                id="hospital-name"
+                placeholder="Enter hospital name"
+            >
+
+
+            <!-- EMAIL -->
+
+            <label>
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="hospital-email"
+                placeholder="Enter hospital email"
+            >
+
+
+            <!-- PHONE -->
+
+            <label>
+                Phone Number
+            </label>
+
+            <input
+                type="text"
+                id="hospital-phone"
+                placeholder="Enter phone number"
+            >
+
+
+            <!-- PASSWORD -->
+
+            <label>
+                Create Password
+            </label>
+
+            <input
+                type="password"
+                id="hospital-password"
+                placeholder="Create password"
+            >
+
+
+            <!-- CITY -->
+
+            <label>
+                City
+            </label>
+
+            <input
+                type="text"
+                id="hospital-city"
+                placeholder="Enter city"
+            >
+
+
+            <!-- ADDRESS -->
+
+            <label>
+                Hospital Address
+            </label>
+
+            <textarea
+                id="hospital-address"
+                placeholder="Enter hospital address"
+            ></textarea>
+
+
+            <!-- BLOOD GROUPS -->
+
+            <label>
+                Available Blood Groups
+            </label>
+
+            <input
+                type="text"
+                id="available-blood-groups"
+                placeholder="Example: A+, B+, O+"
+            >
+
+
+            <!-- REGISTER -->
+
+            <button
+                type="button"
+                onclick="hospitalSignup()"
+            >
+                🏥 Create Hospital Account
+            </button>
+
+
+            <!-- LOGIN LINK -->
+
+            <p>
+
+                Already have an account?
+
+                <a href="hospital-login.html">
+                    Login here
+                </a>
+
+            </p>
+
+
+            <!-- MESSAGE -->
+
+            <p
+                id="hospital-signup-message"
+            ></p>
+
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

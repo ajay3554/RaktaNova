@@ -218,12 +218,7 @@ async function subscribeToPushNotifications(donorId) {
 // =====================================================
 
 function showDonor() {
-
-    document
-        .getElementById("donor-register")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
+    window.location.href = "donor-signup.html";
 }
 
 
@@ -231,13 +226,15 @@ function showDonor() {
 // SHOW HOSPITAL
 // =====================================================
 
+// =====================================================
+// SHOW HOSPITAL
+// =====================================================
+
 function showHospital() {
 
-    document
-        .getElementById("hospital")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
+    // Always open Hospital Login first
+    window.location.href = "hospital-login.html";
+
 }
 
 
@@ -1765,3 +1762,289 @@ window.addEventListener(
 
     }
 );
+
+
+// =====================================================
+// HOSPITAL SIGNUP
+// =====================================================
+
+async function hospitalSignup() {
+
+    const name =
+        document.getElementById(
+            "hospital-name"
+        ).value.trim();
+
+    const email =
+        document.getElementById(
+            "hospital-email"
+        ).value.trim();
+
+    const phone =
+        document.getElementById(
+            "hospital-phone"
+        ).value.trim();
+
+    const password =
+        document.getElementById(
+            "hospital-password"
+        ).value;
+
+    const city =
+        document.getElementById(
+            "hospital-city"
+        ).value.trim();
+
+    const address =
+        document.getElementById(
+            "hospital-address"
+        ).value.trim();
+
+    const bloodGroups =
+        document.getElementById(
+            "available-blood-groups"
+        ).value.trim();
+
+    const message =
+        document.getElementById(
+            "hospital-signup-message"
+        );
+
+
+    if (
+        !name ||
+        !email ||
+        !phone ||
+        !password ||
+        !city
+    ) {
+
+        message.textContent =
+            "Please fill all required fields.";
+
+        return;
+    }
+
+
+    if (password.length < 6) {
+
+        message.textContent =
+            "Password must contain at least 6 characters.";
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/hospital-signup`,
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        name: name,
+
+                        email: email,
+
+                        password: password,
+
+                        confirm_password: password,
+
+                        phone: phone,
+
+                        city: city,
+
+                        address: address,
+
+                        available_blood_groups:
+                            bloodGroups
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Hospital registration failed."
+            );
+
+        }
+
+
+        message.textContent =
+            "Hospital account created successfully. Redirecting to login...";
+
+
+        localStorage.setItem(
+            "hospitalId",
+            data.hospital_id
+        );
+
+
+        localStorage.setItem(
+            "hospitalEmail",
+            data.email
+        );
+
+
+        setTimeout(
+            function() {
+
+                window.location.href =
+                    "hospital-login.html";
+
+            },
+            1200
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "Hospital signup error:",
+            error
+        );
+
+        message.textContent =
+            error.message;
+
+    }
+
+}
+
+
+// =====================================================
+// HOSPITAL LOGIN
+// =====================================================
+
+async function hospitalLogin() {
+
+    const identifier =
+        document.getElementById(
+            "hospital-login-identifier"
+        ).value.trim();
+
+    const password =
+        document.getElementById(
+            "hospital-login-password"
+        ).value;
+
+    const message =
+        document.getElementById(
+            "hospital-login-message"
+        );
+
+
+    if (!identifier || !password) {
+
+        message.textContent =
+            "Please enter Hospital ID/email and password.";
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/hospital-login`,
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        identifier: identifier,
+
+                        password: password
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Hospital login failed."
+            );
+
+        }
+
+
+        localStorage.setItem(
+            "hospitalId",
+            data.hospital_id
+        );
+
+
+        localStorage.setItem(
+            "hospitalName",
+            data.name
+        );
+
+
+        localStorage.setItem(
+            "hospitalEmail",
+            data.email
+        );
+
+
+        message.textContent =
+            "Login successful. Redirecting to dashboard...";
+
+
+        setTimeout(
+            function() {
+
+                window.location.href =
+                    "hospital.html";
+
+            },
+            800
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "Hospital login error:",
+            error
+        );
+
+        message.textContent =
+            error.message;
+
+    }
+
+}
+

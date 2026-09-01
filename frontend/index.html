@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>LifeLink AI</title>
+    <title>RaktaNova</title>
 
     <link
         rel="stylesheet"
@@ -23,10 +23,14 @@
 <body>
 
 
+<!-- =========================
+     NAVBAR
+========================= -->
+
 <nav class="navbar">
 
     <div class="logo">
-        🩸 LifeLink AI
+        🩸 Save Lives with RaktaNova
     </div>
 
     <div class="nav-links">
@@ -35,11 +39,17 @@
             Home
         </a>
 
-        <a href="#donor">
+        <a
+            href="#"
+            onclick="showDonor(); return false;"
+        >
             Donor
         </a>
 
-        <a href="#hospital">
+        <a
+            href="#"
+            onclick="showHospital(); return false;"
+        >
             Hospital
         </a>
 
@@ -48,15 +58,20 @@
 </nav>
 
 
-<!-- HOME -->
+<!-- =========================
+     HOME
+========================= -->
 
-<section id="home" class="hero">
+<section
+    id="home"
+    class="hero"
+>
 
     <div class="hero-content">
 
         <h1>
             Save Lives with
-            <span>LifeLink AI</span>
+            <span>RaktaNova</span>
         </h1>
 
         <p>
@@ -64,14 +79,25 @@
             using smart nearby-donor GPS matching.
         </p>
 
+        <p>
+            Our intelligent blood matching system helps
+            hospitals find suitable nearby donors quickly
+            during emergency situations.
+        </p>
 
         <div class="buttons">
 
-            <button onclick="showDonor()">
+            <button
+                type="button"
+                onclick="showDonor()"
+            >
                 🩸 I'm a Donor
             </button>
 
-            <button onclick="showHospital()">
+            <button
+                type="button"
+                onclick="showHospital()"
+            >
                 🏥 I'm a Hospital
             </button>
 
@@ -82,18 +108,19 @@
 </section>
 
 
-
-<!-- DONOR REGISTRATION -->
+<!-- =========================
+     DONOR REGISTRATION
+========================= -->
 
 <section
     id="donor-register"
     class="dashboard"
+    style="display: none;"
 >
 
     <h2>
         🩸 Donor Registration
     </h2>
-
 
     <div class="card">
 
@@ -103,13 +130,11 @@
             placeholder="Full Name"
         >
 
-
         <input
             type="number"
             id="donor-age"
             placeholder="Age"
         >
-
 
         <select id="donor-blood-group">
 
@@ -131,15 +156,11 @@
 
         </select>
 
-
         <input
             type="text"
             id="donor-phone"
             placeholder="Phone Number"
         >
-
-
-        <!-- PASSWORD FIELD -->
 
         <input
             type="password"
@@ -147,18 +168,15 @@
             placeholder="Create Password"
         >
 
-
         <input
             type="text"
             id="donor-city"
             placeholder="City"
         >
 
-
         <p id="donor-location-status">
             📍 Location not captured yet
         </p>
-
 
         <button
             type="button"
@@ -167,11 +185,11 @@
             📍 Use My Current Location
         </button>
 
-
-        <button onclick="registerDonor()">
-
+        <button
+            type="button"
+            onclick="registerDonor()"
+        >
             Register as Donor
-
         </button>
 
     </div>
@@ -179,58 +197,19 @@
 </section>
 
 
-
-<!-- DONOR DASHBOARD -->
-
-<section
-    id="donor"
-    class="dashboard"
->
-
-    <h2>
-        🩸 Donor Dashboard
-    </h2>
-
-
-    <div class="card">
-
-        <h3>
-            Welcome, Donor
-        </h3>
-
-
-        <p>
-            Check nearby blood requests
-            and respond to emergencies.
-        </p>
-
-
-        <button onclick="getNotifications()">
-
-            View Notifications
-
-        </button>
-
-    </div>
-
-
-    <div id="donor-notifications"></div>
-
-</section>
-
-
-
-<!-- DONOR LOGIN -->
+<!-- =========================
+     DONOR LOGIN
+========================= -->
 
 <section
     id="donor-login"
     class="dashboard"
+    style="display: none;"
 >
 
     <h2>
         🔐 Donor Login
     </h2>
-
 
     <div class="card">
 
@@ -240,18 +219,17 @@
             placeholder="Phone Number"
         >
 
-
         <input
             type="password"
             id="login-password"
             placeholder="Password"
         >
 
-
-        <button onclick="donorLogin()">
-
+        <button
+            type="button"
+            onclick="donorLogin()"
+        >
             Login
-
         </button>
 
     </div>
@@ -259,12 +237,53 @@
 </section>
 
 
+<!-- =========================
+     DONOR DASHBOARD
+========================= -->
 
-<!-- HOSPITAL -->
+<section
+    id="donor"
+    class="dashboard"
+    style="display: none;"
+>
+
+    <h2>
+        🩸 Donor Dashboard
+    </h2>
+
+    <div class="card">
+
+        <h3>
+            Welcome, Donor
+        </h3>
+
+        <p>
+            Check nearby blood requests
+            and respond to emergencies.
+        </p>
+
+        <button
+            type="button"
+            onclick="getNotifications()"
+        >
+            View Notifications
+        </button>
+
+    </div>
+
+    <div id="donor-notifications"></div>
+
+</section>
+
+
+<!-- =========================
+     HOSPITAL DASHBOARD
+========================= -->
 
 <section
     id="hospital"
     class="dashboard"
+    style="display: none;"
 >
 
     <h2>
@@ -280,11 +299,9 @@
             🩸 Create Blood Request
         </h3>
 
-
         <label>
             Your Hospital ID
         </label>
-
 
         <input
             type="number"
@@ -293,11 +310,9 @@
             placeholder="Enter Hospital ID (e.g. 1)"
         >
 
-
         <p id="hospital-location-status">
             📍 Location not set for this hospital yet
         </p>
-
 
         <button
             type="button"
@@ -306,11 +321,9 @@
             📍 Update My Hospital Location
         </button>
 
-
         <label>
             Blood Group
         </label>
-
 
         <select id="blood-group">
 
@@ -332,11 +345,9 @@
 
         </select>
 
-
         <label>
             Units Required
         </label>
-
 
         <input
             type="number"
@@ -344,20 +355,26 @@
             min="1"
             placeholder="Enter units"
         >
+
         <label>
             Request Type
         </label>
 
         <select id="request-type">
-            <option value="emergency">🚨 Emergency</option>
-            <option value="shortage">🩸 Blood Shortage</option>
-        </select>
 
+            <option value="emergency">
+                🚨 Emergency
+            </option>
+
+            <option value="shortage">
+                🩸 Blood Shortage
+            </option>
+
+        </select>
 
         <label>
             City
         </label>
-
 
         <input
             type="text"
@@ -365,15 +382,14 @@
             placeholder="Enter city"
         >
 
-
-        <button onclick="createBloodRequest()">
-
+        <button
+            type="button"
+            onclick="createBloodRequest()"
+        >
             Create Blood Request
-
         </button>
 
     </div>
-
 
 
     <!-- EXISTING REQUESTS -->
@@ -384,41 +400,47 @@
             Hospital Blood Requests
         </h3>
 
-
         <p>
             View blood requests and
             accepted donors.
         </p>
 
-
-        <button onclick="getHospitalRequests()">
-
+        <button
+            type="button"
+            onclick="getHospitalRequests()"
+        >
             View Requests
-
         </button>
 
     </div>
 
 
     <div id="hospital-requests"></div>
+
+
+    <!-- DONOR RESPONSE -->
+
     <div
-    id="hospital-response-status"
-    class="card"
-   >
+        id="hospital-response-status"
+        class="card"
+    >
 
-    <h3>
-        📊 Donor Response Status
-    </h3>
+        <h3>
+            📊 Donor Response Status
+        </h3>
 
-    <p id="response-status-message">
-        Select a blood request to view donor responses.
-    </p>
+        <p id="response-status-message">
+            Select a blood request to view donor responses.
+        </p>
 
-</div>
+    </div>
 
 </section>
 
 
+<!-- =========================
+     JAVASCRIPT
+========================= -->
 
 <script src="script.js"></script>
 

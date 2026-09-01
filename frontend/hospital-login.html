@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Hospital Login - LifeLink AI</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🩸 LifeLink AI
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <section class="dashboard">
+
+        <h2>
+            🏥 Hospital Login
+        </h2>
+
+
+        <div class="card">
+
+            <h3>
+                Welcome Back
+            </h3>
+
+            <p>
+                Login to access your hospital dashboard.
+            </p>
+
+
+            <!-- EMAIL / HOSPITAL ID -->
+
+            <label>
+                Hospital ID or Email
+            </label>
+
+            <input
+                type="text"
+                id="hospital-login-identifier"
+                placeholder="Enter Hospital ID or Email"
+            >
+
+
+            <!-- PASSWORD -->
+
+            <label>
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="hospital-login-password"
+                placeholder="Enter Password"
+            >
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="button"
+                onclick="hospitalLogin()"
+            >
+                🔐 Login
+            </button>
+
+
+            <!-- SIGNUP LINK -->
+
+            <p>
+
+                Don't have a hospital account?
+
+                <a
+                    href="hospital-signup.html"
+                >
+                    Create Hospital Account
+                </a>
+
+            </p>
+
+
+            <!-- ERROR / SUCCESS MESSAGE -->
+
+            <p
+                id="hospital-login-message"
+            ></p>
+
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

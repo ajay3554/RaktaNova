@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from sqlalchemy import desc, text, inspect
 from datetime import datetime
+import hashlib
+import secrets
+import hmac
 from backend.models import (
     Donor,
     Hospital,
@@ -21,6 +24,52 @@ from backend.notification_service import send_push_notification
 # =========================================================
 
 MATCH_RADIUS_KM = 20
+
+# =========================================================
+# PASSWORD HASHING
+# =========================================================
+
+def hash_password(password: str) -> str:
+
+    salt = secrets.token_bytes(16)
+
+    password_hash = hashlib.pbkdf2_hmac(
+        "sha256",
+        password.encode("utf-8"),
+        salt,
+        100000
+    )
+
+    return (
+        salt.hex()
+        + ":"
+        + password_hash.hex()
+    )
+
+
+def verify_password(password: str, stored_password: str) -> bool:
+
+    try:
+
+        salt_hex, hash_hex = stored_password.split(":")
+
+        salt = bytes.fromhex(salt_hex)
+
+        password_hash = hashlib.pbkdf2_hmac(
+            "sha256",
+            password.encode("utf-8"),
+            salt,
+            100000
+        )
+
+        return hmac.compare_digest(
+            password_hash.hex(),
+            hash_hex
+        )
+
+    except Exception:
+
+        return False
 
 
 # =========================================================
@@ -118,20 +167,24 @@ Base.metadata.create_all(bind=engine)
 
 # =========================================================
 # DATABASE MIGRATION
-# ADD PASSWORD COLUMN IF IT DOES NOT EXIST
+# ADD REQUIRED COLUMNS IF THEY DO NOT EXIST
 # =========================================================
 
 try:
     inspector = inspect(engine)
 
+    # -----------------------------------------------------
+    # DONOR TABLE
+    # -----------------------------------------------------
+
     if "donors" in inspector.get_table_names():
 
-        columns = [
+        donor_columns = [
             column["name"]
             for column in inspector.get_columns("donors")
         ]
 
-        if "password" not in columns:
+        if "password" not in donor_columns:
 
             with engine.begin() as connection:
 
@@ -144,10 +197,63 @@ try:
                     )
                 )
 
-                print("Password column added successfully.")
+            print("Donor password column added successfully.")
 
         else:
-            print("Password column already exists.")
+            print("Donor password column already exists.")
+
+    # -----------------------------------------------------
+    # HOSPITAL TABLE
+    # -----------------------------------------------------
+
+    if "hospitals" in inspector.get_table_names():
+
+        hospital_columns = [
+            column["name"]
+            for column in inspector.get_columns("hospitals")
+        ]
+
+        # Add email column
+        if "email" not in hospital_columns:
+
+            with engine.begin() as connection:
+
+                connection.execute(
+                    text(
+                        """
+                        ALTER TABLE hospitals
+                        ADD COLUMN email VARCHAR(150)
+                        """
+                    )
+                )
+
+            print("Hospital email column added successfully.")
+
+        else:
+            print("Hospital email column already exists.")
+
+        # Add password column
+        if "password" not in hospital_columns:
+
+            with engine.begin() as connection:
+
+                connection.execute(
+                    text(
+                        """
+                        ALTER TABLE hospitals
+                        ADD COLUMN password VARCHAR(255)
+                        """
+                    )
+                )
+
+            print("Hospital password column added successfully.")
+
+        else:
+            print("Hospital password column already exists.")
+
+    # -----------------------------------------------------
+    # NOTIFICATIONS TABLE
+    # -----------------------------------------------------
 
     if "notifications" in inspector.get_table_names():
 
@@ -169,7 +275,7 @@ try:
                     )
                 )
 
-                print("match_score column added successfully.")
+            print("match_score column added successfully.")
 
         if "match_rank" not in notif_columns:
 
@@ -184,22 +290,26 @@ try:
                     )
                 )
 
-                print("match_rank column added successfully.")
+            print("match_rank column added successfully.")
+
         if "distance_km" not in notif_columns:
 
-           with engine.begin() as connection:
+            with engine.begin() as connection:
 
                 connection.execute(
-                   text(
-                       """
-                       ALTER TABLE notifications
-                       ADD COLUMN distance_km FLOAT
-                       """
+                    text(
+                        """
+                        ALTER TABLE notifications
+                        ADD COLUMN distance_km FLOAT
+                        """
                     )
-            )
+                )
 
-        print("distance_km column added successfully.")
+            print("distance_km column added successfully.")
+
+
 except Exception as error:
+
     print("Database migration warning:", error)
 
 
@@ -297,19 +407,19 @@ def register_donor(
 
     if not blood_group:
         raise HTTPException(
-         status_code=400,
-         detail="Blood group is required"
-     )
+            status_code=400,
+            detail="Blood group is required"
+        )
 
     valid_blood_groups = [
-       "A+",
-       "A-",
-       "B+",
-       "B-",
-       "AB+",
-       "AB-",
-       "O+",
-       "O-"
+        "A+",
+        "A-",
+        "B+",
+        "B-",
+        "AB+",
+        "AB-",
+        "O+",
+        "O-"
     ]
 
     if blood_group not in valid_blood_groups:
@@ -325,8 +435,8 @@ def register_donor(
         )
     if not city:
         raise HTTPException(
-           status_code=400,
-           detail="City is required"
+            status_code=400,
+            detail="City is required"
         )
 
     if not password:
@@ -979,6 +1089,279 @@ def get_request_responses(
 
 
 # =========================================================
+# HOSPITAL SIGNUP
+# =========================================================
+
+@app.post("/hospital-signup")
+def hospital_signup(
+    hospital_data: dict,
+    db: Session = Depends(get_db)
+):
+
+    name = hospital_data.get("name")
+    email = hospital_data.get("email")
+    password = hospital_data.get("password")
+    confirm_password = hospital_data.get("confirm_password")
+
+    phone = hospital_data.get("phone")
+    city = hospital_data.get("city")
+    address = hospital_data.get("address")
+
+    latitude = hospital_data.get("latitude")
+    longitude = hospital_data.get("longitude")
+
+    # -----------------------------------------------------
+    # REQUIRED FIELD VALIDATION
+    # -----------------------------------------------------
+
+    if not name:
+        raise HTTPException(
+            status_code=400,
+            detail="Hospital name is required"
+        )
+
+    if not email:
+        raise HTTPException(
+            status_code=400,
+            detail="Hospital email is required"
+        )
+
+    if not password:
+        raise HTTPException(
+            status_code=400,
+            detail="Password is required"
+        )
+
+    if not confirm_password:
+        raise HTTPException(
+            status_code=400,
+            detail="Confirm password is required"
+        )
+
+    if password != confirm_password:
+        raise HTTPException(
+            status_code=400,
+            detail="Passwords do not match"
+        )
+
+    if len(password) < 6:
+        raise HTTPException(
+            status_code=400,
+            detail="Password must contain at least 6 characters"
+        )
+
+    if not phone:
+        raise HTTPException(
+            status_code=400,
+            detail="Phone number is required"
+        )
+
+    if not city:
+        raise HTTPException(
+            status_code=400,
+            detail="City is required"
+        )
+
+    # -----------------------------------------------------
+    # NORMALIZE EMAIL
+    # -----------------------------------------------------
+
+    email = email.strip().lower()
+
+    # -----------------------------------------------------
+    # CHECK DUPLICATE EMAIL
+    # -----------------------------------------------------
+
+    existing_hospital = (
+        db.query(Hospital)
+        .filter(Hospital.email == email)
+        .first()
+    )
+
+    if existing_hospital:
+
+        raise HTTPException(
+            status_code=409,
+            detail="Hospital with this email already exists"
+        )
+
+    # -----------------------------------------------------
+    # HASH PASSWORD
+    # -----------------------------------------------------
+
+    hashed_password = hash_password(password)
+
+    # -----------------------------------------------------
+    # CREATE HOSPITAL
+    # -----------------------------------------------------
+
+    hospital = Hospital(
+        name=name.strip(),
+        email=email,
+        password=hashed_password,
+        phone=phone.strip() if phone else None,
+        city=city.strip() if city else None,
+        address=address.strip() if address else None,
+        latitude=(
+            float(latitude)
+            if latitude not in (None, "")
+            else None
+        ),
+        longitude=(
+            float(longitude)
+            if longitude not in (None, "")
+            else None
+        )
+    )
+
+    # -----------------------------------------------------
+    # SAVE TO DATABASE
+    # -----------------------------------------------------
+
+    try:
+
+        db.add(hospital)
+
+        db.commit()
+
+        db.refresh(hospital)
+
+    except Exception:
+
+        db.rollback()
+
+        raise HTTPException(
+            status_code=500,
+            detail="Hospital registration failed"
+        )
+
+    # -----------------------------------------------------
+    # RESPONSE
+    # -----------------------------------------------------
+
+    return {
+        "message": "Hospital registered successfully",
+        "hospital_id": hospital.id,
+        "name": hospital.name,
+        "email": hospital.email,
+        "phone": hospital.phone,
+        "city": hospital.city,
+        "latitude": hospital.latitude,
+        "longitude": hospital.longitude
+    }
+
+# =========================================================
+# HOSPITAL LOGIN
+# =========================================================
+
+@app.post("/hospital-login")
+def hospital_login(
+    login_data: dict,
+    db: Session = Depends(get_db)
+):
+
+    identifier = login_data.get("identifier")
+    password = login_data.get("password")
+
+    # -----------------------------------------------------
+    # VALIDATION
+    # -----------------------------------------------------
+
+    if not identifier:
+        raise HTTPException(
+            status_code=400,
+            detail="Hospital ID or email is required"
+        )
+
+    if not password:
+        raise HTTPException(
+            status_code=400,
+            detail="Password is required"
+        )
+
+    identifier = str(identifier).strip()
+
+    # -----------------------------------------------------
+    # FIND HOSPITAL
+    # -----------------------------------------------------
+
+    hospital = None
+
+    # Try Hospital ID first
+    try:
+
+        hospital_id = int(identifier)
+
+        hospital = (
+            db.query(Hospital)
+            .filter(Hospital.id == hospital_id)
+            .first()
+        )
+
+    except ValueError:
+
+        hospital = None
+
+    # If ID was not found, try email
+    if not hospital:
+
+        hospital = (
+            db.query(Hospital)
+            .filter(
+                Hospital.email == identifier.lower()
+            )
+            .first()
+        )
+
+    # -----------------------------------------------------
+    # CHECK HOSPITAL
+    # -----------------------------------------------------
+
+    if not hospital:
+
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid Hospital ID/email or password"
+        )
+
+    # -----------------------------------------------------
+    # VERIFY PASSWORD
+    # -----------------------------------------------------
+
+    if not hospital.password:
+
+        raise HTTPException(
+            status_code=401,
+            detail="Hospital account is not configured for login"
+        )
+
+    if not verify_password(
+        password,
+        hospital.password
+    ):
+
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid Hospital ID/email or password"
+        )
+
+    # -----------------------------------------------------
+    # LOGIN SUCCESS
+    # -----------------------------------------------------
+
+    return {
+        "message": "Hospital login successful",
+        "hospital_id": hospital.id,
+        "name": hospital.name,
+        "email": hospital.email,
+        "phone": hospital.phone,
+        "city": hospital.city,
+        "address": hospital.address,
+        "latitude": hospital.latitude,
+        "longitude": hospital.longitude
+    }
+
+# =========================================================
 # CREATE HOSPITAL
 # =========================================================
 
@@ -1185,25 +1568,6 @@ def create_blood_request(
     db.add(blood_request)
     db.commit()
     db.refresh(blood_request)
-    # Temporary Test
-    donor18 = db.query(Donor).filter(Donor.id == 18).first()
-
-    if donor18:
-      donor18.available = True
-      db.commit()
-      db.refresh(donor18)
-
-    print(
-       "DONOR 18:",
-        donor18.id,
-        donor18.name,
-        donor18.blood_group,
-        donor18.available,
-        donor18.city,
-        donor18.latitude,
-        donor18.longitude
-    )
-
     candidate_donors = (
         db.query(Donor)
         .filter(
@@ -1218,15 +1582,15 @@ def create_blood_request(
     print("CANDIDATE DONORS:")
 
     for d in candidate_donors:
-       print(
-        "Donor ID:", d.id,
-        "| Name:", d.name,
-        "| Blood:", d.blood_group,
-        "| Available:", d.available,
-        "| City:", d.city,
-        "| Lat:", d.latitude,
-        "| Lon:", d.longitude
-    )
+        print(
+            "Donor ID:", d.id,
+            "| Name:", d.name,
+            "| Blood:", d.blood_group,
+            "| Available:", d.available,
+            "| City:", d.city,
+            "| Lat:", d.latitude,
+            "| Lon:", d.longitude
+        )
 
     print("================================")
 
@@ -1317,6 +1681,15 @@ def create_blood_request(
             distance_km=distance_km
         )
 
+        # -----------------------------------------------------
+        # PUSH NOTIFICATION
+        # -----------------------------------------------------
+        # The database notification is the source of truth.
+        # A browser push subscription is optional.
+        # If push delivery is unavailable, keep the notification
+        # as pending so the donor can still see it in the app.
+        # -----------------------------------------------------
+
         try:
             push_subscription = (
                 db.query(PushSubscription)
@@ -1339,21 +1712,38 @@ def create_blood_request(
                     message
                 )
 
-                notification.status = (
-                    "sent" if push_sent else "failed"
-                )
+                if push_sent:
+                    notification.status = "sent"
+                    print(
+                        f"Push notification sent to donor {donor.id}"
+                    )
+                else:
+                    # Push failed, but the notification is still valid.
+                    notification.status = "pending"
+                    print(
+                        f"Push failed for donor {donor.id}. "
+                        f"Keeping notification as pending."
+                    )
+
             else:
+                # No browser subscription. The donor can still see the
+                # notification from the application dashboard.
+                notification.status = "pending"
                 print(
-                    f"No push subscription found for donor {donor.id}"
+                    f"No push subscription found for donor {donor.id}. "
+                    f"Notification saved as pending."
                 )
-                notification.status = "failed"
 
         except Exception as error:
+            # Push service errors must not make the blood-request
+            # notification unusable. Keep it pending.
+            notification.status = "pending"
             print(
-                f"Push notification failed for donor {donor.id}: {error}"
+                f"Push notification failed for donor {donor.id}: {error}. "
+                f"Keeping notification as pending."
             )
-            notification.status = "failed"
 
+        # Save the database notification regardless of push result.
         db.add(notification)
         db.commit()
         notification_count += 1

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Registration - LifeLink AI</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .auth-page {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 55px 20px 80px;
+        }
+        .auth-wrap { width: 100%; max-width: 760px; }
+        .page-title { text-align: center; margin-bottom: 28px; }
+        .page-title h2 { font-size: 38px; margin-bottom: 10px; }
+        .page-title p { color: #666; font-size: 18px; }
+        .auth-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 34px;
+            box-shadow: 0 8px 28px rgba(0,0,0,.09);
+        }
+        .auth-card h3 { text-align: center; font-size: 25px; margin-bottom: 8px; }
+        .auth-card .subtitle { text-align:center; color:#666; margin-bottom:26px; }
+        .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+        .field { margin-bottom: 18px; }
+        .field label { display:block; font-weight:700; margin-bottom:8px; }
+        .field input, .field select {
+            width:100%;
+            box-sizing:border-box;
+            padding:14px 15px;
+            border:1px solid #ddd;
+            border-radius:9px;
+            font-size:16px;
+            background:#fff;
+        }
+        .location-box {
+            background:#fff5f6;
+            border:1px solid #ffd4d8;
+            border-radius:12px;
+            padding:16px;
+            margin: 6px 0 22px;
+        }
+        .location-box p { margin:0 0 12px; color:#555; }
+        .location-btn { width:100%; }
+        .submit-btn { width:100%; margin-top:5px; }
+        .message {
+            text-align:center;
+            min-height:24px;
+            margin-top:15px;
+            font-weight:600;
+        }
+        .auth-footer { text-align:center; margin-top:22px; color:#666; font-size:17px; }
+        .auth-footer a { color:#e9334a; font-weight:700; }
+        @media (max-width: 650px) {
+            .field-row { grid-template-columns:1fr; gap:0; }
+            .auth-card { padding:24px 18px; }
+            .page-title h2 { font-size:30px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">🩸 LifeLink AI</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="hospital-signup.html">Hospital</a>
+        </div>
+    </nav>
+
+    <main class="auth-page">
+        <div class="auth-wrap">
+            <div class="page-title">
+                <h2>🩸 Donor Registration</h2>
+                <p>Become a LifeLink AI blood donor and help save lives.</p>
+            </div>
+
+            <div class="auth-card">
+                <h3>Create Donor Account</h3>
+                <p class="subtitle">Register once, then login to your donor dashboard.</p>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label>Full Name</label>
+                        <input id="donor-name" type="text" placeholder="Enter your full name">
+                    </div>
+                    <div class="field">
+                        <label>Age</label>
+                        <input id="donor-age" type="number" min="1" max="100" placeholder="Enter your age">
+                    </div>
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label>Blood Group</label>
+                        <select id="donor-blood-group">
+                            <option value="">Select Blood Group</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Phone Number</label>
+                        <input id="donor-phone" type="tel" placeholder="Enter phone number">
+                    </div>
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label>Password</label>
+                        <input id="donor-password" type="password" placeholder="Create password">
+                    </div>
+                    <div class="field">
+                        <label>City</label>
+                        <input id="donor-city" type="text" placeholder="Enter city">
+                    </div>
+                </div>
+
+                <div class="location-box">
+                    <p id="donor-location-status">📍 Location not captured yet</p>
+                    <button class="location-btn" type="button" onclick="captureDonorLocation()">
+                        📍 Use My Current Location
+                    </button>
+                </div>
+
+                <button class="submit-btn" type="button" onclick="registerDonorPage()">
+                    🩸 Register as Donor
+                </button>
+
+                <div id="donor-signup-message" class="message"></div>
+
+                <div class="auth-footer">
+                    Already have an account?
+                    <a href="donor-login.html">Login here</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="donor-pages.js"></script>
+</body>
+</html>
