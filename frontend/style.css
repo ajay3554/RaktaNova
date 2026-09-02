@@ -42,3 +42,140 @@ input,select,textarea { width: 100%; min-height: 46px; padding: 11px 12px; borde
 .notification-card { margin: 14px 0; padding: 18px; border: 1px solid var(--line); border-left: 4px solid var(--primary); border-radius: 12px; background: #fff; box-shadow: 0 4px 14px rgba(24,33,47,.05); }.notification-card h3 { margin-top: 0; }.notification-actions { display: flex; gap: 10px; }.notification-actions button { flex: 1; }.empty-state { padding: 22px; border: 1px dashed #bdcad5; border-radius: 12px; text-align: center; color: var(--muted); background: #fff; }
 .dashboard-shell { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(300px,.8fr); gap: 20px; align-items: start; }.dashboard-shell .card { max-width: none; margin: 0 0 20px; }.status-pill { display: inline-flex; padding: 5px 9px; border-radius: 99px; color: var(--success); background: var(--success-soft); font-size: .78rem; font-weight: 800; }.logout-btn { color: var(--ink)!important; background: #fff!important; border-color: var(--line)!important; }
 @media (max-width:720px) { .navbar { padding: 12px 18px; }.nav-links { gap: 12px; }.nav-links a { font-size: .86rem; }.hero { min-height: 500px; padding: 56px 20px; }.buttons,.buttons button,.action-row button,.form-actions { width: 100%; }.dashboard,.dashboard-page,.auth-page { padding: 32px 16px 56px; }.auth-page { padding-top: 38px; }.field-row,.profile-grid,.notification-meta,.dashboard-shell { grid-template-columns: 1fr; } }
+
+/* Landing role selection */
+.landing-nav { position: relative; z-index: 1; }
+.landing-hero { min-height: calc(100vh - 68px); padding: 72px 24px; background: #f8fafc; }
+.landing-hero .hero-content { max-width: 960px; }
+.landing-hero .eyebrow { margin-bottom: 20px; }
+.landing-intro { max-width: 680px; }
+.role-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 38px auto 0; text-align: left; }
+.role-card { display: flex; gap: 16px; min-height: 202px; padding: 24px; border: 1px solid var(--line); border-radius: 18px; color: var(--ink); background: var(--surface); box-shadow: 0 8px 22px rgba(24,33,47,.06); text-decoration: none; transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
+.role-card:hover { border-color: #c48792; box-shadow: var(--shadow); transform: translateY(-2px); }
+.role-card:focus-visible { outline: 3px solid rgba(180,35,59,.28); outline-offset: 3px; }
+.role-icon { display: grid; place-items: center; flex: 0 0 auto; width: 44px; height: 44px; border-radius: 13px; color: var(--primary); background: var(--primary-soft); font-size: 1.25rem; font-weight: 800; }
+.role-card-content { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.role-card-content strong { font-size: 1.3rem; }
+.role-card-content > span { color: var(--muted); }
+.role-link { margin-top: auto; color: var(--primary) !important; font-size: .92rem; font-weight: 800; }
+.landing-signin { margin-top: 26px !important; font-size: .93rem !important; }
+.landing-signin a { font-weight: 750; }
+@media (max-width:720px) { .landing-hero { min-height: calc(100vh - 64px); padding: 48px 18px 56px; }.landing-hero .hero-content { text-align: left; }.landing-hero p { margin-left: 0; }.role-grid { grid-template-columns: 1fr; margin-top: 30px; }.role-card { min-height: 172px; padding: 20px; }.landing-signin { text-align: center; } }
+
+/* Donor experience: compact first, then progressively wider layouts. */
+body:has(#donor-name) .auth-page,
+body:has(#donor-login-phone) .auth-page { padding: 32px 16px 56px; }
+body:has(#donor-name) .auth-wrap,
+body:has(#donor-login-phone) .auth-wrap { max-width: 680px; }
+body:has(#donor-name) .auth-card,
+body:has(#donor-login-phone) .auth-card { border-top: 4px solid var(--primary); }
+body:has(#donor-name) .location-box { display: grid; gap: 12px; }
+body:has(#donor-name) .location-box p { margin: 0; }
+
+body:has(#donor-welcome) { background: #f6f8fb; }
+body:has(#donor-welcome) .dashboard-page { max-width: 1240px; padding: 28px 16px 56px; }
+body:has(#donor-welcome) .page-heading { margin-bottom: 20px; }
+body:has(#donor-welcome) .page-heading h1 { font-size: clamp(2rem, 7vw, 3.5rem); }
+body:has(#donor-welcome) .profile-card,
+body:has(#donor-welcome) .feature-card { margin: 0 0 16px; box-shadow: 0 5px 18px rgba(24,33,47,.05); }
+body:has(#donor-welcome) .profile-card { border-top: 4px solid var(--primary); }
+body:has(#donor-welcome) .profile-head { align-items: flex-start; }
+body:has(#donor-welcome) .profile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+body:has(#donor-welcome) .info-box strong { font-size: 1rem; overflow-wrap: anywhere; }
+body:has(#donor-welcome) .location-status { margin: 16px 0; }
+body:has(#donor-welcome) .action-row { display: grid; grid-template-columns: 1fr; }
+body:has(#donor-welcome) .action-row button { width: 100%; }
+body:has(#donor-welcome) #requests > h3 { margin-bottom: 6px; }
+body:has(#donor-welcome) #donor-notifications { margin-top: 20px; }
+body:has(#donor-welcome) .notification-card { position: relative; padding: 20px; border-left-width: 4px; }
+body:has(#donor-welcome) .notification-card[data-priority="emergency"] { border-left-color: var(--primary); }
+body:has(#donor-welcome) .notification-card[data-priority="shortage"] { border-left-color: #ad6a09; }
+body:has(#donor-welcome) .notification-card::before { display: inline-flex; margin-bottom: 12px; padding: 5px 8px; border-radius: 99px; color: #6e2735; background: var(--primary-soft); content: "Blood request"; font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+body:has(#donor-welcome) .notification-card[data-priority="emergency"]::before { content: "Emergency request"; }
+body:has(#donor-welcome) .notification-card[data-priority="shortage"]::before { color: #704000; background: #fff3dc; content: "Blood shortage"; }
+body:has(#donor-welcome) .notification-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+body:has(#donor-welcome) .notification-meta div { min-height: 72px; }
+body:has(#donor-welcome) .notification-actions { display: grid; grid-template-columns: 1fr 1fr; }
+body:has(#donor-welcome) .notification-actions button { min-width: 0; }
+
+@media (min-width: 640px) {
+    body:has(#donor-name) .auth-page,
+    body:has(#donor-login-phone) .auth-page { padding: 52px 24px 72px; }
+    body:has(#donor-welcome) .dashboard-page { padding: 44px 24px 72px; }
+    body:has(#donor-welcome) .action-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    body:has(#donor-welcome) .feature-card { padding: 28px; }
+}
+
+@media (min-width: 900px) {
+    body:has(#donor-welcome) .dashboard-page { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(360px, .95fr); gap: 20px; align-items: start; }
+    body:has(#donor-welcome) .page-heading,
+    body:has(#donor-welcome) #requests { grid-column: 1 / -1; }
+    body:has(#donor-welcome) .profile-card,
+    body:has(#donor-welcome) .feature-card { margin-bottom: 0; }
+    body:has(#donor-welcome) .profile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    body:has(#donor-welcome) .notification-meta { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    body:has(#donor-welcome) .notification-actions { max-width: 380px; }
+}
+
+/* Hospital experience: operational desktop layout with responsive fallbacks. */
+body:has(#hospital-name) .auth-page,
+body:has(#hospital-login-identifier) .auth-page { padding: 48px 24px 72px; }
+body:has(#hospital-name) .auth-wrap,
+body:has(#hospital-login-identifier) .auth-wrap { max-width: 760px; }
+body:has(#hospital-name) .auth-card,
+body:has(#hospital-login-identifier) .auth-card { border-top: 4px solid var(--primary); }
+
+body:has(#hospital-welcome) { background: #f4f7fa; }
+body:has(#hospital-welcome) .dashboard { max-width: 1360px; padding: 36px 24px 80px; }
+body:has(#hospital-welcome) .page-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+body:has(#hospital-welcome) .page-heading p { margin-bottom: 0; }
+body:has(#hospital-welcome) .dashboard-shell { grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr); gap: 20px; }
+body:has(#hospital-welcome) .dashboard-shell > .card { border-top: 4px solid var(--primary); }
+body:has(#hospital-welcome) .dashboard-shell aside { display: grid; gap: 20px; }
+body:has(#hospital-welcome) .dashboard-shell aside .card { margin: 0; }
+body:has(#hospital-welcome) .status-pill { margin-bottom: 14px; }
+body:has(#hospital-welcome) .location-status { margin: 14px 0; }
+body:has(#hospital-welcome) #new-request > button.secondary { width: 100%; }
+body:has(#hospital-welcome) #requests { margin-top: 24px; }
+body:has(#hospital-welcome) #requests > button { margin-top: 12px; }
+body:has(#hospital-welcome) #hospital-requests { display: grid; gap: 12px; margin-top: 18px; }
+body:has(#hospital-welcome) #hospital-requests .notification-card { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; max-width: none; margin: 0; border-left-width: 4px; box-shadow: 0 4px 14px rgba(24,33,47,.04); }
+body:has(#hospital-welcome) #hospital-requests .notification-card::before { display: inline-flex; width: fit-content; margin-bottom: 12px; padding: 5px 8px; border-radius: 99px; color: #6e2735; background: var(--primary-soft); content: "Blood request"; font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+body:has(#hospital-welcome) #hospital-requests .notification-card[data-request-type="emergency"]::before { content: "Emergency"; }
+body:has(#hospital-welcome) #hospital-requests .notification-card[data-request-type="shortage"]::before { color: #704000; background: #fff3dc; content: "Blood shortage"; }
+body:has(#hospital-welcome) #hospital-requests .notification-card[data-request-status="accepted"] { border-left-color: var(--success); }
+body:has(#hospital-welcome) .accepted-donor { margin: 12px 0 0; padding: 12px; border-radius: 10px; color: #176747; background: var(--success-soft); }
+
+@media (max-width: 760px) {
+    body:has(#hospital-name) .auth-page,
+    body:has(#hospital-login-identifier) .auth-page { padding: 32px 16px 56px; }
+    body:has(#hospital-welcome) .dashboard { padding: 28px 16px 56px; }
+    body:has(#hospital-welcome) .page-heading { display: block; }
+    body:has(#hospital-welcome) .dashboard-shell { grid-template-columns: 1fr; }
+    body:has(#hospital-welcome) .dashboard-shell > .card { margin-bottom: 16px; }
+    body:has(#hospital-welcome) #requests > button { width: 100%; }
+}
+
+@media (min-width: 1080px) {
+    body:has(#hospital-welcome) #hospital-requests .notification-card { grid-template-columns: minmax(220px, .7fr) repeat(4, minmax(0, 1fr)); column-gap: 20px; align-items: start; }
+    body:has(#hospital-welcome) #hospital-requests .notification-card::before,
+    body:has(#hospital-welcome) #hospital-requests .notification-card h3 { grid-column: 1 / -1; }
+    body:has(#hospital-welcome) #hospital-requests .notification-card .accepted-donor { grid-column: 1 / -1; }
+}
+
+/* Hospital application shell: sidebar on wide screens, compact navigation below. */
+body:has(#hospital-welcome) .hospital-sidebar .nav-links { gap: 8px; }
+@media (min-width: 980px) {
+    body:has(#hospital-welcome) .hospital-sidebar { position: fixed; inset: 0 auto 0 0; width: 240px; min-height: 100vh; padding: 28px 18px; flex-direction: column; align-items: stretch; justify-content: flex-start; border-right: 1px solid var(--line); border-bottom: 0; }
+    body:has(#hospital-welcome) .hospital-sidebar .logo { margin-bottom: 28px; }
+    body:has(#hospital-welcome) .hospital-sidebar .nav-links { flex-direction: column; align-items: stretch; }
+    body:has(#hospital-welcome) .hospital-sidebar .nav-links a { padding: 10px 12px; border-radius: 9px; }
+    body:has(#hospital-welcome) .hospital-sidebar .nav-links a:hover { background: var(--primary-soft); }
+    body:has(#hospital-welcome) .hospital-sidebar .nav-links a:last-child { margin-top: 16px; color: #6b3340; }
+    body:has(#hospital-welcome) .dashboard { width: min(calc(100% - 240px), 1400px); max-width: none; margin: 0 0 0 240px; padding: 52px 40px 80px; }
+}
+@media (max-width: 979px) {
+    body:has(#hospital-welcome) .hospital-sidebar { align-items: flex-start; }
+    body:has(#hospital-welcome) .hospital-sidebar .nav-links { width: 100%; overflow-x: auto; padding-bottom: 2px; }
+    body:has(#hospital-welcome) .hospital-sidebar .nav-links a { flex: 0 0 auto; }
+}

@@ -1293,6 +1293,14 @@ function renderDonorNotificationsPage(
             card.className =
                 "notification-card";
 
+            card.dataset.priority =
+                notification.request_type || "";
+
+            card.setAttribute(
+                "role",
+                "article"
+            );
+
 
             card.id =
                 `donor-notification-${notification.id}`;

@@ -1247,13 +1247,31 @@ async function getHospitalRequests() {
             );
 
 
+        container.setAttribute(
+            "aria-live",
+            "polite"
+        );
+
+        container.setAttribute(
+            "aria-busy",
+            "true"
+        );
+
         container.innerHTML = "";
+
+        container.innerHTML =
+            '<div class="empty-state">Loading blood requests...</div>';
 
 
         if (
             !data.blood_requests ||
             data.blood_requests.length === 0
         ) {
+
+            container.setAttribute(
+                "aria-busy",
+                "false"
+            );
 
             container.innerHTML = `
                 <div class="card">
@@ -1265,6 +1283,8 @@ async function getHospitalRequests() {
 
             return;
         }
+
+        container.innerHTML = "";
 
 
         data.blood_requests.forEach(
@@ -1278,6 +1298,18 @@ async function getHospitalRequests() {
 
                 card.className =
                     "card notification-card";
+
+                card.dataset.requestType =
+                    request.request_type || "";
+
+                card.dataset.requestStatus =
+                    request.status || "";
+
+                card.setAttribute(
+                    "role",
+                    "article"
+                );
+
                 card.id= `notification-${request.id}`;
 
 
@@ -1319,6 +1351,20 @@ async function getHospitalRequests() {
 
                 `;
 
+                if (request.accepted_donor) {
+
+                    const acceptedDonor =
+                        document.createElement("p");
+
+                    acceptedDonor.className =
+                        "accepted-donor";
+
+                    acceptedDonor.textContent =
+                        `Accepted donor: ${request.accepted_donor.name} (${request.accepted_donor.blood_group})`;
+
+                    card.appendChild(acceptedDonor);
+                }
+
 
                 container.appendChild(
                     card
@@ -1327,9 +1373,30 @@ async function getHospitalRequests() {
             }
         );
 
+        container.setAttribute(
+            "aria-busy",
+            "false"
+        );
+
     }
 
     catch (error) {
+
+        const container =
+            document.getElementById(
+                "hospital-requests"
+            );
+
+        if (container) {
+
+            container.setAttribute(
+                "aria-busy",
+                "false"
+            );
+
+            container.innerHTML =
+                `<div class="empty-state">${error.message}</div>`;
+        }
 
         console.error(error);
 
