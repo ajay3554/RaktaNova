@@ -19,6 +19,10 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .nav-links { display: flex; align-items: center; gap: 18px; }
 .nav-links a { color: var(--muted); font-size: .94rem; font-weight: 700; text-decoration: none; }
 .nav-links a:hover { color: var(--primary); }
+body:has(#donor-welcome) .nav-links a[href="#"] { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 18px; border: 1px solid var(--primary); border-radius: 10px; color: #fff; background: var(--primary); transition: background .18s ease,transform .18s ease; }
+body:has(#donor-welcome) .nav-links a[href="#"]:hover { color: #fff; background: var(--primary-dark); border-color: var(--primary-dark); }
+body:has(#hospital-welcome) .nav-links a[href="#"] { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 18px; border: 1px solid var(--primary); border-radius: 10px; color: #fff; background: var(--primary); transition: background .18s ease,transform .18s ease; }
+body:has(#hospital-welcome) .nav-links a[href="#"]:hover { color: #fff; background: var(--primary-dark); border-color: var(--primary-dark); }
 .hero { min-height: 560px; display: grid; place-items: center; padding: 72px 24px; background: linear-gradient(135deg,#fff 0%,#fff5f6 100%); }
 .hero-content { width: min(100%,820px); text-align: center; }
 .eyebrow { display: inline-flex; gap: 8px; margin-bottom: 18px; padding: 7px 11px; border-radius: 99px; color: var(--primary-dark); background: var(--primary-soft); font-size: .84rem; font-weight: 800; }
@@ -45,22 +49,38 @@ input,select,textarea { width: 100%; min-height: 46px; padding: 11px 12px; borde
 
 /* Landing role selection */
 .landing-nav { position: relative; z-index: 1; }
-.landing-hero { min-height: calc(100vh - 68px); padding: 72px 24px; background: #f8fafc; }
+.landing-nav .logo { color: var(--primary); font-size: 1.35rem; }
+.landing-nav .brand-mark { width: auto; height: auto; color: var(--primary); background: transparent; font-size: 1.5rem; }
+.landing-nav .nav-links { gap: 34px; margin-left: auto; }
+.landing-nav .nav-links a { display: inline-flex; position: relative; align-items: center; min-height: 44px; color: #40516b; font-size: 1rem; font-weight: 500; }
+.landing-nav .nav-links a[aria-current="page"] { color: var(--primary); font-weight: 700; }
+.landing-nav .nav-links a[aria-current="page"]::after { position: absolute; right: 0; bottom: 4px; left: 0; height: 2px; background: var(--primary); content: ""; }
+.landing-hero { min-height: auto; padding: 118px 24px 78px; background: #f8f8ff; }
 .landing-hero .hero-content { max-width: 960px; }
-.landing-hero .eyebrow { margin-bottom: 20px; }
-.landing-intro { max-width: 680px; }
-.role-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 38px auto 0; text-align: left; }
-.role-card { display: flex; gap: 16px; min-height: 202px; padding: 24px; border: 1px solid var(--line); border-radius: 18px; color: var(--ink); background: var(--surface); box-shadow: 0 8px 22px rgba(24,33,47,.06); text-decoration: none; transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
+.landing-hero .eyebrow { margin-bottom: 34px; padding: 7px 16px; border: 1px solid #c8d3ec; color: #5a2c38; background: #e9efff; box-shadow: 0 2px 5px rgba(24,33,47,.08); }
+.landing-hero .eyebrow span { color: var(--primary); }
+.landing-hero h1 { color: #101827; font-size: clamp(2.4rem, 5vw, 3.8rem); letter-spacing: -.035em; }
+.landing-hero h1 span { color: #ad001d; }
+.landing-intro { max-width: 760px; margin-top: 28px; color: #445875; font-size: 1.18rem; line-height: 1.5; }
+.role-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin: 116px auto 0; text-align: left; }
+.role-card { display: flex; gap: 22px; min-height: 478px; padding: 58px; border: 1px solid #eab2b8; border-radius: 16px; color: var(--ink); background: #fff; box-shadow: 0 12px 24px rgba(24,33,47,.035); text-decoration: none; transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
 .role-card:hover { border-color: #c48792; box-shadow: var(--shadow); transform: translateY(-2px); }
 .role-card:focus-visible { outline: 3px solid rgba(180,35,59,.28); outline-offset: 3px; }
-.role-icon { display: grid; place-items: center; flex: 0 0 auto; width: 44px; height: 44px; border-radius: 13px; color: var(--primary); background: var(--primary-soft); font-size: 1.25rem; font-weight: 800; }
+.role-icon { display: grid; place-items: center; flex: 0 0 auto; width: 78px; height: 78px; border-radius: 18px; color: var(--primary); background: #dce7ff; font-size: 2.5rem; font-weight: 400; }
+.role-icon.hospital-icon { color: #52617a; background: #e8efff; }
 .role-card-content { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
-.role-card-content strong { font-size: 1.3rem; }
-.role-card-content > span { color: var(--muted); }
-.role-link { margin-top: auto; color: var(--primary) !important; font-size: .92rem; font-weight: 800; }
-.landing-signin { margin-top: 26px !important; font-size: .93rem !important; }
+.role-card-content strong { margin-top: 8px; color: #0e1728; font-size: 2rem; font-weight: 500; }
+.role-card-content > span { color: #445875; font-size: 1.08rem; line-height: 1.55; }
+.role-link { margin-top: auto; color: var(--primary) !important; font-size: 1rem !important; font-weight: 700 !important; letter-spacing: .04em; }
+.role-card:nth-child(2) .role-link { color: #53627a !important; }
+.landing-signin { display: none; }
+.impact-panel { display: flex; align-items: center; gap: 38px; width: min(calc(100% - 48px), 1256px); margin: 40px auto 116px; padding: 42px 40px; border: 1px solid #d8dff1; border-radius: 16px; background: #eef2ff; }
+.impact-icon { display: grid; place-items: center; flex: 0 0 auto; width: 116px; height: 116px; border: 5px solid #fff; border-radius: 50%; color: var(--primary); font-size: 3rem; }
+.impact-panel h2 { margin: 0 0 10px; color: #0e1728; font-size: 1.75rem; font-weight: 500; }
+.impact-panel p { max-width: 900px; margin: 0 0 22px; color: #445875; font-size: 1.08rem; }
+.impact-panel a { color: var(--primary); font-weight: 700; letter-spacing: .04em; text-decoration: none; }
 .landing-signin a { font-weight: 750; }
-@media (max-width:720px) { .landing-hero { min-height: calc(100vh - 64px); padding: 48px 18px 56px; }.landing-hero .hero-content { text-align: left; }.landing-hero p { margin-left: 0; }.role-grid { grid-template-columns: 1fr; margin-top: 30px; }.role-card { min-height: 172px; padding: 20px; }.landing-signin { text-align: center; } }
+@media (max-width:720px) { .landing-nav .nav-links { gap: 10px; }.landing-nav .nav-links a { min-height: 36px; font-size: .76rem; }.landing-hero { padding: 68px 18px 48px; }.landing-hero .hero-content { text-align: center; }.landing-hero p { margin-left: auto; margin-right: auto; }.desktop-break { display: none; }.role-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 58px; }.role-card { min-height: 300px; padding: 28px; }.role-card-content strong { font-size: 1.65rem; }.role-card-content > span { font-size: 1rem; }.impact-panel { align-items: flex-start; flex-direction: column; width: calc(100% - 32px); margin: 24px auto 64px; padding: 28px 24px; gap: 22px; } }
 
 /* Donor experience: compact first, then progressively wider layouts. */
 body:has(#donor-name) .auth-page,
@@ -103,6 +123,10 @@ body:has(#donor-welcome) .notification-actions button { min-width: 0; }
     body:has(#donor-login-phone) .auth-page { padding: 52px 24px 72px; }
     body:has(#donor-welcome) .dashboard-page { padding: 44px 24px 72px; }
     body:has(#donor-welcome) .action-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    body:has(#donor-welcome) .dashboard-page > .feature-card:not(#requests) .action-row { grid-template-columns: 1fr; justify-items: center; }
+    body:has(#donor-welcome) .dashboard-page > .feature-card:not(#requests) .action-row button { width: auto; }
+    body:has(#donor-welcome) #requests .action-row { grid-template-columns: 1fr; justify-items: center; }
+    body:has(#donor-welcome) #requests .action-row button { width: auto; }
     body:has(#donor-welcome) .feature-card { padding: 28px; }
 }
 
@@ -133,6 +157,8 @@ body:has(#hospital-welcome) .dashboard-shell { grid-template-columns: minmax(0, 
 body:has(#hospital-welcome) .dashboard-shell > .card { border-top: 4px solid var(--primary); }
 body:has(#hospital-welcome) .dashboard-shell aside { display: grid; gap: 20px; }
 body:has(#hospital-welcome) .dashboard-shell aside .card { margin: 0; }
+body:has(#hospital-welcome) #new-request .form-actions { justify-content: center; }
+body:has(#hospital-welcome) #new-request .form-actions button { flex: 0 0 auto; width: auto; }
 body:has(#hospital-welcome) .status-pill { margin-bottom: 14px; }
 body:has(#hospital-welcome) .location-status { margin: 14px 0; }
 body:has(#hospital-welcome) #new-request > button.secondary { width: 100%; }
@@ -163,19 +189,341 @@ body:has(#hospital-welcome) .accepted-donor { margin: 12px 0 0; padding: 12px; b
     body:has(#hospital-welcome) #hospital-requests .notification-card .accepted-donor { grid-column: 1 / -1; }
 }
 
-/* Hospital application shell: sidebar on wide screens, compact navigation below. */
-body:has(#hospital-welcome) .hospital-sidebar .nav-links { gap: 8px; }
-@media (min-width: 980px) {
-    body:has(#hospital-welcome) .hospital-sidebar { position: fixed; inset: 0 auto 0 0; width: 240px; min-height: 100vh; padding: 28px 18px; flex-direction: column; align-items: stretch; justify-content: flex-start; border-right: 1px solid var(--line); border-bottom: 0; }
-    body:has(#hospital-welcome) .hospital-sidebar .logo { margin-bottom: 28px; }
-    body:has(#hospital-welcome) .hospital-sidebar .nav-links { flex-direction: column; align-items: stretch; }
-    body:has(#hospital-welcome) .hospital-sidebar .nav-links a { padding: 10px 12px; border-radius: 9px; }
-    body:has(#hospital-welcome) .hospital-sidebar .nav-links a:hover { background: var(--primary-soft); }
-    body:has(#hospital-welcome) .hospital-sidebar .nav-links a:last-child { margin-top: 16px; color: #6b3340; }
-    body:has(#hospital-welcome) .dashboard { width: min(calc(100% - 240px), 1400px); max-width: none; margin: 0 0 0 240px; padding: 52px 40px 80px; }
+/* Donor sign-up: focused, mobile-first registration flow. */
+body.donor-login-page { min-height: 100vh; background: #f9f9ff; }
+body.donor-login-page .login-header { display: flex; align-items: center; justify-content: space-between; min-height: 64px; padding: 12px max(20px,calc((100% - 1280px)/2)); border-bottom: 1px solid #e5bdbb; background: #f9f9ff; box-shadow: 0 2px 5px rgba(24,33,47,.04); }
+body.donor-login-page .login-header .logo { color: var(--primary); font-size: 1.35rem; }
+body.donor-login-page .login-header .brand-mark { width: auto; height: auto; color: var(--primary); background: transparent; font-size: 1.5rem; }
+body.donor-login-page .login-actions { display: flex; align-items: center; gap: 14px; }
+body.donor-login-page .login-actions a { color: #53617a; font-size: .95rem; font-weight: 600; text-decoration: none; }
+body.donor-login-page .login-actions a:hover { color: var(--primary); }
+body.donor-login-page .login-actions .login-signup { padding: 10px 20px; border-radius: 8px; color: #fff; background: #c8102e; }
+body.donor-login-page .login-actions .login-signup:hover { color: #fff; background: var(--primary-dark); }
+body.donor-login-page .login-main { position: relative; display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 64px); overflow: hidden; padding: 48px 16px; background: #f9f9ff; }
+body.donor-login-page .login-main::before,
+body.donor-login-page .login-main::after { position: absolute; border-radius: 50%; content: ""; pointer-events: none; filter: blur(70px); }
+body.donor-login-page .login-main::before { top: -180px; right: -140px; width: 620px; height: 620px; background: rgba(217,227,251,.45); }
+body.donor-login-page .login-main::after { bottom: -250px; left: -160px; width: 520px; height: 520px; background: rgba(215,227,249,.35); }
+body.donor-login-page .login-card { position: relative; z-index: 1; width: min(100%, 480px); padding: 42px 34px 34px; border: 1px solid #d9dde8; border-radius: 12px; background: #fff; box-shadow: 0 8px 30px rgba(0,0,0,.04); }
+body.donor-login-page .login-intro { text-align: center; }
+body.donor-login-page .login-logo { display: grid; place-items: center; width: 54px; height: 54px; margin: 0 auto 16px; border-radius: 14px; color: var(--primary); background: #e9efff; font-size: 2rem; }
+body.donor-login-page .login-intro h1 { margin: 0 0 8px; color: #111c2d; font-size: clamp(2rem, 5vw, 2.5rem); line-height: 1.2; }
+body.donor-login-page .login-intro p,
+body.donor-login-page .login-helper { color: #53617a; }
+body.donor-login-page .login-intro p { margin: 0; }
+body.donor-login-page .login-divider { display: flex; align-items: center; gap: 12px; margin: 32px 0 18px; color: #53617a; font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+body.donor-login-page .login-divider::before,
+body.donor-login-page .login-divider::after { flex: 1; border-top: 1px solid #d9dde8; content: ""; }
+body.donor-login-page .login-helper { margin: 0 0 24px; text-align: center; font-size: .82rem; }
+body.donor-login-page .login-fields { display: grid; gap: 20px; }
+body.donor-login-page .login-field label { margin: 0 0 7px; color: #111c2d; font-size: .88rem; font-weight: 600; }
+body.donor-login-page .input-with-icon { position: relative; }
+body.donor-login-page .input-with-icon > span { position: absolute; top: 50%; left: 14px; z-index: 1; color: #53617a; font-size: 1.1rem; line-height: 1; transform: translateY(-50%); }
+body.donor-login-page .input-with-icon input { min-height: 50px; padding-left: 42px; border-color: #d9dde8; border-radius: 8px; background: #fff; }
+body.donor-login-page .input-with-icon input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(158,0,31,.1); }
+body.donor-login-page .forgot-link { display: block; margin-top: 8px; color: var(--primary); font-size: .78rem; text-align: right; text-decoration: none; }
+body.donor-login-page .forgot-link:hover { text-decoration: underline; }
+body.donor-login-page .login-submit { margin-top: 28px; }
+body.donor-login-page .login-submit button { display: flex; align-items: center; justify-content: center; width: 100%; gap: 8px; min-height: 50px; }
+body.donor-login-page .login-card .message { margin-top: 16px; }
+body.donor-login-page .auth-footer { margin: 28px 0 0; color: #53617a; text-align: center; }
+body.donor-login-page .auth-footer a { color: var(--primary); font-weight: 600; }
+body:has(#donor-signup-message) { background: #f9f9ff; }
+body:has(#donor-signup-message) .signup-nav { min-height: 64px; padding: 12px max(20px,calc((100% - 1280px)/2)); background: #f9f9ff; border-bottom: 1px solid #e5bdbb; box-shadow: 0 2px 5px rgba(24,33,47,.04); }
+body:has(#donor-signup-message) .signup-nav .logo { color: var(--primary); font-size: 1.35rem; }
+body:has(#donor-signup-message) .signup-nav .brand-mark { width: auto; height: auto; color: var(--primary); background: transparent; font-size: 1.5rem; }
+body:has(#donor-signup-message) .cancel-link { display: inline-flex; align-items: center; gap: 6px; color: #53617a; font-size: .95rem; font-weight: 600; text-decoration: none; }
+body:has(#donor-signup-message) .cancel-link:hover { color: var(--primary); }
+body:has(#donor-signup-message) .auth-page { padding: 28px 16px 56px; background: #f8fafc; }
+body:has(#donor-signup-message) .auth-wrap { max-width: 760px; }
+body:has(#donor-signup-message) .auth-page { min-height: calc(100vh - 64px); padding: 48px 16px 64px; }
+body:has(#donor-signup-message) .auth-wrap { width: min(100%, 760px); }
+body:has(#donor-signup-message) .auth-card { position: relative; overflow: hidden; padding: 30px 22px; border: 1px solid #e5bdbb; border-radius: 12px; border-top: 1px solid #e5bdbb; background: #fff; box-shadow: 0 20px 40px -15px rgba(158,0,31,.08); }
+body:has(#donor-signup-message) .auth-card::before { position: absolute; top: -96px; right: -96px; width: 190px; height: 190px; border-radius: 50%; background: rgba(200,16,46,.08); content: ""; filter: blur(28px); pointer-events: none; }
+body:has(#donor-signup-message) .signup-heading { position: relative; z-index: 1; margin-bottom: 34px; }
+body:has(#donor-signup-message) .signup-heading h1 { margin: 0 0 10px; color: #111c2d; font-size: clamp(1.7rem, 5vw, 2rem); line-height: 1.25; }
+body:has(#donor-signup-message) .signup-heading p { margin: 0; color: #53617a; }
+body:has(#donor-signup-message) .field-row { position: relative; z-index: 1; }
+body:has(#donor-signup-message) .field-row { grid-template-columns: 1fr; gap: 0; }
+body:has(#donor-signup-message) .field { margin-bottom: 18px; }
+body:has(#donor-signup-message) .field label::after { margin-left: 4px; color: var(--primary); content: "*"; }
+body:has(#donor-signup-message) input,
+body:has(#donor-signup-message) select { min-height: 50px; }
+body:has(#donor-signup-message) input,
+body:has(#donor-signup-message) select { border-color: #e5bdbb; border-radius: 8px; background: #f9f9ff; }
+body:has(#donor-signup-message) input:focus,
+body:has(#donor-signup-message) select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(158,0,31,.1); }
+body:has(#donor-signup-message) .location-box { position: relative; z-index: 1; display: grid; gap: 14px; margin: 10px 0 24px; padding: 18px; border-color: #e5bdbb; border-radius: 12px; background: #f0f3ff; }
+body:has(#donor-signup-message) .location-copy strong { color: #111c2d; }
+body:has(#donor-signup-message) .location-box p { margin: 4px 0 0; color: #53617a; }
+body:has(#donor-signup-message) .location-box button { width: 100%; }
+body:has(#donor-signup-message) .form-actions { position: relative; z-index: 1; margin-top: 0; }
+body:has(#donor-signup-message) .form-actions button { min-height: 50px; }
+body:has(#donor-signup-message) #donor-signup-message:not(:empty) { padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: #f8fafc; }
+@media (min-width: 680px) {
+    body:has(#donor-signup-message) .auth-page { padding: 52px 24px 76px; }
+    body:has(#donor-signup-message) .auth-card { padding: 38px 40px; }
+    body:has(#donor-signup-message) .field-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 18px; }
+    body:has(#donor-signup-message) .location-box { grid-template-columns: 1fr auto; align-items: center; }
+    body:has(#donor-signup-message) .location-box button { width: auto; }
 }
-@media (max-width: 979px) {
-    body:has(#hospital-welcome) .hospital-sidebar { align-items: flex-start; }
-    body:has(#hospital-welcome) .hospital-sidebar .nav-links { width: 100%; overflow-x: auto; padding-bottom: 2px; }
-    body:has(#hospital-welcome) .hospital-sidebar .nav-links a { flex: 0 0 auto; }
+
+/* Donor dashboard: compact profile rail and request workspace. */
+body.donor-dashboard-page { background: #f0f2f5; }
+body.donor-dashboard-page .donor-dashboard-nav { background: #fff; }
+body.donor-dashboard-page .donor-dashboard-nav .logo { color: var(--primary); }
+body.donor-dashboard-page .donor-dashboard-nav .brand-mark { width: auto; height: auto; color: var(--primary); background: transparent; font-size: 1.5rem; }
+body.donor-dashboard-page .donor-dashboard-nav .donor-logout { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 18px; border: 1px solid var(--primary); border-radius: 10px; color: #fff; background: var(--primary); }
+body.donor-dashboard-page .donor-dashboard-nav .donor-logout:hover { color: #fff; background: var(--primary-dark); border-color: var(--primary-dark); }
+body.donor-dashboard-page .dashboard-page { width: min(100%, 1280px); padding: 40px 24px 72px; }
+body.donor-dashboard-page .donor-welcome-heading { margin-bottom: 28px; }
+body.donor-dashboard-page .donor-welcome-heading h1 { color: #111c2d; font-size: clamp(2.1rem, 5vw, 2.8rem); }
+body.donor-dashboard-page .donor-welcome-heading p { display: flex; align-items: center; gap: 8px; color: #53617a; font-size: 1.08rem; }
+body.donor-dashboard-page .donor-welcome-heading p span { color: var(--primary); font-size: .8rem; }
+body.donor-dashboard-page .donor-dashboard-grid { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr); gap: 24px; align-items: stretch; }
+body.donor-dashboard-page .donor-sidebar-content { display: flex; flex-direction: column; gap: 24px; }
+body.donor-dashboard-page .donor-panel { margin: 0; padding: 26px; border: 1px solid #e4e7ec; border-radius: 12px; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,.05); }
+body.donor-dashboard-page .donor-panel h2 { margin: 0 0 8px; color: #111c2d; font-size: 1.35rem; font-weight: 600; }
+body.donor-dashboard-page .donor-panel > p { margin: 0; color: #53617a; }
+body.donor-dashboard-page .donor-profile-list { display: grid; gap: 0; margin: 24px 0 0; }
+body.donor-dashboard-page .donor-profile-list > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid #d9e3fb; }
+body.donor-dashboard-page .donor-profile-list > div:last-child { border-bottom: 0; }
+body.donor-dashboard-page .donor-profile-list dt { color: #53617a; font-size: .88rem; }
+body.donor-dashboard-page .donor-profile-list dd { margin: 0; color: #111c2d; font-size: .95rem; font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+body.donor-dashboard-page .donor-profile-list > div:nth-child(2) dd { padding: 4px 8px; border-radius: 4px; color: var(--primary); background: #ffb3b1; }
+body.donor-dashboard-page .donor-location-panel { flex: 1; }
+body.donor-dashboard-page .donor-location-panel .location-status { margin: 20px 0; padding: 13px; border-color: #d9e3fb; color: #176747; background: #f0f3ff; }
+body.donor-dashboard-page .donor-location-panel .action-row { justify-content: center; }
+body.donor-dashboard-page .donor-location-panel .action-row button { width: 100%; color: #111c2d; border-color: #c4c7ca; background: #fff; }
+body.donor-dashboard-page .donor-location-panel .action-row button:hover { color: #111c2d; background: #d9e3fb; border-color: #bbc7dc; }
+body.donor-dashboard-page .donor-requests-panel { display: flex; flex-direction: column; min-height: 100%; }
+body.donor-dashboard-page .dashboard-page { display: block !important; }
+body.donor-dashboard-page #requests { grid-column: auto !important; }
+body.donor-dashboard-page .donor-requests-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
+body.donor-dashboard-page .donor-requests-heading h2 { display: flex; align-items: center; gap: 8px; }
+body.donor-dashboard-page .donor-requests-heading h2 span { color: var(--primary); }
+body.donor-dashboard-page .donor-requests-heading p { max-width: 560px; }
+body.donor-dashboard-page .donor-requests-heading button { display: inline-flex; align-items: center; flex: 0 0 auto; gap: 8px; white-space: nowrap; }
+body.donor-dashboard-page #donor-notifications { display: flex; flex: 1; flex-direction: column; }
+body.donor-dashboard-page #donor-notifications > .empty-state { display: flex; flex: 1; align-items: center; justify-content: center; min-height: 300px; border: 2px dashed #d9e3fb; border-radius: 12px; color: #5c403f; background: #fff; }
+@media (max-width: 800px) {
+    body.donor-dashboard-page .dashboard-page { padding: 30px 16px 56px; }
+    body.donor-dashboard-page .donor-dashboard-grid { grid-template-columns: 1fr; }
+    body.donor-dashboard-page .donor-requests-heading { flex-direction: column; }
+    body.donor-dashboard-page .donor-requests-heading button { width: 100%; justify-content: center; }
+}
+
+/* Hospital sign-up: focused workspace setup form. */
+body.hospital-signup-page { background: #f9f9ff; }
+body.hospital-signup-page .hospital-signup-header { display: flex; align-items: center; justify-content: space-between; min-height: 64px; padding: 12px max(20px,calc((100% - 1280px)/2)); border-bottom: 1px solid #e5bdbb; background: #f9f9ff; box-shadow: 0 2px 5px rgba(24,33,47,.04); }
+body.hospital-signup-page .hospital-signup-header .logo { color: var(--primary); font-size: 1.35rem; }
+body.hospital-signup-page .hospital-signup-header .brand-mark { color: var(--primary); background: transparent; }
+body.hospital-signup-page .hospital-signup-nav { display: flex; align-items: center; gap: 24px; }
+body.hospital-signup-page .hospital-signup-nav a { color: #53617a; font-size: .9rem; font-weight: 600; text-decoration: none; }
+body.hospital-signup-page .hospital-signup-nav a:hover { color: var(--primary); }
+body.hospital-signup-page .hospital-signup-main { display: flex; justify-content: center; width: 100%; padding: 48px 16px 64px; }
+body.hospital-signup-page .hospital-signup-card { width: min(100%, 760px); overflow: hidden; border: 1px solid #e5bdbb; border-radius: 12px; background: #fff; box-shadow: 0 4px 20px -2px rgba(17,28,45,.05); }
+body.hospital-signup-page .hospital-signup-heading { padding: 32px 22px; border-bottom: 1px solid #e5bdbb; background: rgba(240,243,255,.35); text-align: center; }
+body.hospital-signup-page .hospital-icon { display: grid; place-items: center; width: 54px; height: 54px; margin: 0 auto 14px; border-radius: 50%; color: var(--primary); background: rgba(200,16,46,.1); font-size: 2rem; font-weight: 600; }
+body.hospital-signup-page .hospital-signup-heading h1 { margin: 0 0 10px; color: #111c2d; font-size: clamp(1.7rem, 5vw, 2rem); line-height: 1.25; }
+body.hospital-signup-page .hospital-signup-heading p { max-width: 560px; margin: 0 auto; color: #53617a; }
+body.hospital-signup-page .hospital-signup-form { padding: 30px 22px; }
+body.hospital-signup-page .hospital-form-section h2 { display: flex; align-items: center; gap: 10px; margin: 0 0 22px; color: #111c2d; font-size: 1.35rem; font-weight: 600; }
+body.hospital-signup-page .hospital-form-section h2 > span { display: inline-block; width: 4px; height: 24px; border-radius: 4px; background: var(--primary); }
+body.hospital-signup-page .hospital-form-section[aria-labelledby="blood-groups-heading"] h2 > span { width: auto; height: auto; color: var(--primary); background: transparent; font-size: 1.4rem; }
+body.hospital-signup-page .hospital-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0 18px; }
+body.hospital-signup-page .hospital-field { min-width: 0; margin-bottom: 18px; }
+body.hospital-signup-page .hospital-field.full-field { grid-column: 1 / -1; }
+body.hospital-signup-page .hospital-field label,
+body.hospital-signup-page .blood-group-field label { display: block; margin: 0 0 7px; color: #5c403f; font-size: .8rem; font-weight: 700; letter-spacing: .03em; }
+body.hospital-signup-page .hospital-input { position: relative; display: flex; align-items: center; overflow: hidden; border: 1px solid #e5bdbb; border-radius: 8px; background: #f9f9ff; }
+body.hospital-signup-page .hospital-input:focus-within { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(200,16,46,.1); }
+body.hospital-signup-page .hospital-input > span { flex: 0 0 auto; padding-left: 13px; color: #53617a; font-size: 1.05rem; }
+body.hospital-signup-page .hospital-input input,
+body.hospital-signup-page .hospital-input textarea { min-height: 48px; padding: 11px 12px 11px 10px; border: 0; background: transparent; }
+body.hospital-signup-page .hospital-input input:focus,
+body.hospital-signup-page .hospital-input textarea:focus { border: 0; box-shadow: none; outline: 0; }
+body.hospital-signup-page .hospital-input textarea { width: 100%; resize: vertical; }
+body.hospital-signup-page .hospital-field small { display: block; margin-top: 6px; color: #53617a; font-size: .75rem; }
+body.hospital-signup-page .hospital-signup-form hr { margin: 10px 0 28px; border: 0; border-top: 1px solid #e5bdbb; }
+body.hospital-signup-page .blood-group-field input { width: 100%; min-height: 48px; border-color: #e5bdbb; border-radius: 8px; background: #f9f9ff; }
+body.hospital-signup-page .blood-group-field input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(200,16,46,.1); }
+body.hospital-signup-page .hospital-submit-area { display: flex; flex-direction: column; align-items: center; gap: 18px; padding-top: 30px; }
+body.hospital-signup-page .hospital-submit-area button { width: 100%; min-height: 52px; }
+body.hospital-signup-page .hospital-submit-area a { color: #53617a; font-size: .9rem; text-decoration: none; }
+body.hospital-signup-page .hospital-submit-area a:hover { color: var(--primary); }
+body.hospital-signup-page #hospital-signup-message:not(:empty) { width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: #f8fafc; }
+@media (max-width: 680px) {
+    body.hospital-signup-page .hospital-signup-header { padding: 12px 18px; }
+    body.hospital-signup-page .hospital-signup-nav { gap: 12px; }
+    body.hospital-signup-page .hospital-signup-nav a { font-size: .8rem; }
+    body.hospital-signup-page .hospital-signup-main { padding: 28px 16px 48px; }
+    body.hospital-signup-page .hospital-signup-form { padding: 26px 20px; }
+    body.hospital-signup-page .hospital-form-grid { grid-template-columns: 1fr; }
+    body.hospital-signup-page .hospital-field.full-field { grid-column: auto; }
+}
+
+/* Hospital sign-in: centered workspace access card. */
+body.hospital-login-page { min-height: 100vh; background: #f9f9ff; }
+body.hospital-login-page .hospital-login-header { display: flex; align-items: center; justify-content: space-between; min-height: 64px; padding: 12px max(20px,calc((100% - 1280px)/2)); border-bottom: 1px solid #e5bdbb; background: #f9f9ff; box-shadow: 0 2px 5px rgba(24,33,47,.04); }
+body.hospital-login-page .hospital-login-header .logo { color: var(--primary); font-size: 1.35rem; }
+body.hospital-login-page .hospital-login-header .brand-mark { color: var(--primary); background: transparent; }
+body.hospital-login-page .hospital-login-nav { display: flex; align-items: center; gap: 24px; }
+body.hospital-login-page .hospital-login-nav a { color: #53617a; font-size: .9rem; font-weight: 600; text-decoration: none; }
+body.hospital-login-page .hospital-login-nav a:last-child { color: var(--primary); }
+body.hospital-login-page .hospital-login-nav a:hover { color: var(--primary); }
+body.hospital-login-page .hospital-login-main { position: relative; display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 64px); overflow: hidden; padding: 48px 16px; background: #f9f9ff; }
+body.hospital-login-page .hospital-login-main::before,
+body.hospital-login-page .hospital-login-main::after { position: absolute; border-radius: 50%; content: ""; pointer-events: none; filter: blur(75px); }
+body.hospital-login-page .hospital-login-main::before { top: -170px; right: -160px; width: 620px; height: 620px; background: rgba(217,227,251,.4); }
+body.hospital-login-page .hospital-login-main::after { bottom: -250px; left: -150px; width: 520px; height: 520px; background: rgba(215,227,249,.3); }
+body.hospital-login-page .hospital-login-card { position: relative; z-index: 1; width: min(100%, 480px); overflow: hidden; padding: 42px 34px 34px; border: 1px solid #e5bdbb; border-radius: 12px; background: #fff; box-shadow: 0 10px 30px -10px rgba(158,0,31,.05), 0 4px 10px -5px rgba(158,0,31,.03); }
+body.hospital-login-page .hospital-login-accent { position: absolute; top: 0; right: 0; left: 0; height: 7px; background: var(--primary); }
+body.hospital-login-page .hospital-login-intro { margin-bottom: 30px; text-align: center; }
+body.hospital-login-page .hospital-login-intro h1 { margin: 0 0 8px; color: #111c2d; font-size: clamp(1.7rem, 5vw, 2rem); line-height: 1.25; }
+body.hospital-login-page .hospital-login-intro p,
+body.hospital-login-page .hospital-welcome p { margin: 0; color: #53617a; }
+body.hospital-login-page .hospital-welcome { margin-bottom: 24px; }
+body.hospital-login-page .hospital-welcome h2 { margin: 0 0 4px; color: #111c2d; font-size: 1.35rem; font-weight: 600; }
+body.hospital-login-page .hospital-welcome p { font-size: .85rem; }
+body.hospital-login-page .hospital-login-fields { display: grid; gap: 20px; }
+body.hospital-login-page .hospital-login-field label { display: block; margin: 0 0 7px; color: #111c2d; font-size: .88rem; font-weight: 600; }
+body.hospital-login-page .hospital-login-input { display: flex; align-items: center; overflow: hidden; border: 1px solid #e5bdbb; border-radius: 8px; background: #f9f9ff; }
+body.hospital-login-page .hospital-login-input:focus-within { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(200,16,46,.1); }
+body.hospital-login-page .hospital-login-input > span { flex: 0 0 auto; padding-left: 13px; color: #53617a; font-size: 1.05rem; }
+body.hospital-login-page .hospital-login-input input { min-height: 50px; padding: 11px 12px 11px 10px; border: 0; background: transparent; }
+body.hospital-login-page .hospital-login-input input:focus { border: 0; box-shadow: none; outline: 0; }
+body.hospital-login-page .hospital-login-options { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 20px 0 26px; }
+body.hospital-login-page .hospital-login-options label { display: inline-flex; align-items: center; gap: 8px; margin: 0; color: #111c2d; font-size: .82rem; }
+body.hospital-login-page .hospital-login-options input { width: 16px; min-height: 16px; accent-color: var(--primary); }
+body.hospital-login-page .hospital-login-options a { color: var(--primary); font-size: .8rem; text-decoration: none; }
+body.hospital-login-page .hospital-login-options a:hover { text-decoration: underline; }
+body.hospital-login-page .hospital-login-submit { display: flex; align-items: center; justify-content: center; width: 100%; gap: 8px; min-height: 50px; }
+body.hospital-login-page .hospital-login-card .message { margin-top: 16px; }
+body.hospital-login-page .auth-footer { margin: 28px 0 0; color: #53617a; text-align: center; }
+body.hospital-login-page .auth-footer a { color: var(--primary); font-weight: 600; }
+@media (max-width: 560px) {
+    body.hospital-login-page .hospital-login-header { padding: 12px 18px; }
+    body.hospital-login-page .hospital-login-nav { gap: 12px; }
+    body.hospital-login-page .hospital-login-nav a { font-size: .8rem; }
+    body.hospital-login-page .hospital-login-main { padding: 32px 16px; }
+    body.hospital-login-page .hospital-login-card { padding: 36px 22px 28px; }
+}
+
+/* Hospital dashboard: request workspace with profile and response rail. */
+body.hospital-dashboard-page { min-height: 100vh; background: #f4f6fb; }
+body.hospital-dashboard-page .hospital-dashboard-header { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; min-height: 64px; padding: 12px max(20px,calc((100% - 1280px)/2)); border-bottom: 1px solid #e5bdbb; background: #f9f9ff; box-shadow: 0 2px 5px rgba(24,33,47,.04); }
+body.hospital-dashboard-page .hospital-dashboard-header .logo { color: var(--primary); font-size: 1.35rem; }
+body.hospital-dashboard-page .hospital-dashboard-header .brand-mark { color: var(--primary); background: transparent; }
+body.hospital-dashboard-page .hospital-dashboard-logout { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 18px; border: 1px solid var(--primary); border-radius: 10px; color: #fff; background: var(--primary); font-size: .9rem; font-weight: 700; text-decoration: none; }
+body.hospital-dashboard-page .hospital-dashboard-logout:hover { color: #fff; background: var(--primary-dark); border-color: var(--primary-dark); }
+body.hospital-dashboard-page .hospital-dashboard-main { width: min(100%, 1280px); margin: 0 auto; padding: 42px 24px 72px; }
+body.hospital-dashboard-page .hospital-dashboard-welcome { margin-bottom: 34px; }
+body.hospital-dashboard-page .hospital-dashboard-welcome p:first-child { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; color: #53617a; font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+body.hospital-dashboard-page .hospital-dashboard-welcome p:first-child span { color: var(--primary); }
+body.hospital-dashboard-page .hospital-dashboard-welcome h1 { margin: 0 0 8px; color: #111c2d; font-size: clamp(2rem, 5vw, 2.8rem); }
+body.hospital-dashboard-page .hospital-dashboard-welcome p:last-child { margin: 0; color: #5c403f; font-size: 1.1rem; }
+body.hospital-dashboard-page .hospital-dashboard-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(320px, .85fr); gap: 24px; align-items: start; }
+body.hospital-dashboard-page .hospital-request-column,
+body.hospital-dashboard-page .hospital-side-column { display: grid; gap: 24px; }
+body.hospital-dashboard-page .hospital-side-column { align-self: start; }
+body.hospital-dashboard-page .hospital-request-card,
+body.hospital-dashboard-page .hospital-previous-requests { border: 1px solid #e5bdbb; border-radius: 16px; background: #fff; box-shadow: 0 12px 30px rgba(24,33,47,.06); }
+body.hospital-dashboard-page .hospital-profile-card { border: 1px solid #dce2ee; border-radius: 16px; background: #fff; box-shadow: 0 12px 30px rgba(24,33,47,.07); }
+body.hospital-dashboard-page .hospital-request-card { position: relative; overflow: hidden; }
+body.hospital-dashboard-page .hospital-request-accent { position: absolute; top: 0; right: 0; width: 250px; height: 250px; border-radius: 50%; background: rgba(255,218,216,.45); transform: translate(30%,-30%); filter: blur(25px); pointer-events: none; }
+body.hospital-dashboard-page .hospital-request-card-content { position: relative; z-index: 1; padding: 32px; }
+body.hospital-dashboard-page .hospital-request-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 24px; }
+body.hospital-dashboard-page h2 { color: #111c2d; font-size: 1.5rem; font-weight: 600; }
+body.hospital-dashboard-page .hospital-request-heading h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; color: var(--primary); }
+body.hospital-dashboard-page .hospital-request-heading h2 span { font-size: 1.6rem; }
+body.hospital-dashboard-page .hospital-request-heading p,
+body.hospital-dashboard-page .hospital-previous-requests p { margin: 0; color: #5c403f; }
+body.hospital-dashboard-page .hospital-id-badge { flex: 0 0 auto; padding: 6px 10px; border: 1px solid #d9e3fb; border-radius: 5px; color: #5c403f; background: #d9e3fb; font-size: .75rem; font-weight: 700; }
+body.hospital-dashboard-page .hospital-location-alert { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 30px; padding: 17px; border: 1px solid rgba(186,26,26,.18); border-radius: 12px; background: rgba(255,218,214,.3); }
+body.hospital-dashboard-page .hospital-location-alert > span { color: #ba1a1a; font-size: 1.2rem; }
+body.hospital-dashboard-page .hospital-location-alert p { margin: 0 0 4px; color: #111c2d; font-weight: 600; }
+body.hospital-dashboard-page .hospital-location-alert small { display: block; margin-bottom: 12px; color: #5c403f; }
+body.hospital-dashboard-page .hospital-location-alert button { min-height: 38px; padding: 8px 14px; color: #111c2d; border-color: #e5bdbb; background: #f0f3ff; }
+body.hospital-dashboard-page .hospital-location-alert button:hover { color: #111c2d; background: #d9e3fb; }
+body.hospital-dashboard-page .hospital-request-fields { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px 18px; }
+body.hospital-dashboard-page .hospital-request-fields label { margin: 0 0 7px; color: #111c2d; font-size: .85rem; font-weight: 600; }
+body.hospital-dashboard-page .hospital-request-fields input,
+body.hospital-dashboard-page .hospital-request-fields select { min-height: 48px; border-color: #e5bdbb; border-radius: 8px; background: #f9f9ff; }
+body.hospital-dashboard-page .hospital-request-fields input:focus,
+body.hospital-dashboard-page .hospital-request-fields select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(200,16,46,.1); }
+body.hospital-dashboard-page .hospital-request-submit { display: flex; justify-content: flex-end; margin-top: 26px; padding-top: 20px; border-top: 1px solid #e5bdbb; }
+body.hospital-dashboard-page .hospital-request-submit button { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; }
+body.hospital-dashboard-page .hospital-previous-requests { display: grid; grid-template-columns: 1fr; gap: 0; padding: 24px; }
+body.hospital-dashboard-page .hospital-previous-requests h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 4px; font-size: 1.3rem; }
+body.hospital-dashboard-page .hospital-previous-requests h2 span { color: #53617a; }
+body.hospital-dashboard-page .hospital-previous-requests > button { flex: 0 0 auto; color: #111c2d; border-color: #e5bdbb; background: #fff; }
+body.hospital-dashboard-page .hospital-previous-requests > button:hover { background: #d9e3fb; }
+body.hospital-dashboard-page .hospital-previous-requests { display: grid; grid-template-columns: 1fr; }
+body.hospital-dashboard-page .hospital-previous-requests > button { justify-self: start; margin-top: 16px; }
+body.hospital-dashboard-page #hospital-requests { display: grid !important; grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr); gap: 12px; width: 100%; margin-top: 18px; }
+body.hospital-dashboard-page #hospital-requests .notification-card { display: block !important; position: relative; grid-template-columns: none !important; gap: normal !important; width: 100%; max-width: none; margin: 0; padding: 20px; border: 1px solid #dce2ee; border-left: 4px solid var(--primary); border-radius: 12px; background: #fbfcff; box-shadow: none; }
+body.hospital-dashboard-page #hospital-requests .notification-card h3 { margin: 0 0 14px; color: #111c2d; font-size: 1.15rem; }
+body.hospital-dashboard-page #hospital-requests .notification-card p { display: flex; justify-content: space-between; gap: 16px; margin: 9px 0; color: #53617a; font-size: .9rem; }
+body.hospital-dashboard-page #hospital-requests .notification-card p strong { color: #111c2d; }
+body.hospital-dashboard-page #hospital-requests .notification-card::before { display: inline-flex; width: fit-content; margin-bottom: 12px; }
+body.hospital-dashboard-page .hospital-profile-card { padding: 28px; }
+body.hospital-dashboard-page .hospital-card-label { margin: 0 0 20px; color: #53617a; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+body.hospital-dashboard-page .hospital-profile-heading { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+body.hospital-dashboard-page .hospital-profile-icon { display: grid; place-items: center; width: 62px; height: 62px; border: 1px solid #e5bdbb; border-radius: 50%; color: var(--primary); background: #e8eeff; font-size: 1.9rem; }
+body.hospital-dashboard-page .hospital-profile-heading h2 { margin: 0 0 4px; font-size: 1.3rem; }
+body.hospital-dashboard-page .hospital-profile-heading span { padding: 3px 7px; border: 1px solid #d9e3fb; border-radius: 4px; color: #5c403f; background: #d9e3fb; font-size: .7rem; }
+body.hospital-dashboard-page .hospital-profile-description { margin: 0 0 24px; color: #53617a; font-size: 1rem; line-height: 1.65; }
+body.hospital-dashboard-page .hospital-profile-card dl { display: grid; gap: 16px; margin: 0; }
+body.hospital-dashboard-page .hospital-profile-card dl > div { padding-top: 14px; border-top: 1px solid #e5bdbb; }
+body.hospital-dashboard-page .hospital-profile-card dt { margin-bottom: 4px; color: #53617a; font-size: .75rem; }
+body.hospital-dashboard-page .hospital-profile-card dd { margin: 0; color: #111c2d; font-size: .95rem; font-weight: 600; overflow-wrap: anywhere; }
+@media (max-width: 900px) {
+    body.hospital-dashboard-page .hospital-dashboard-main { padding: 30px 16px 56px; }
+    body.hospital-dashboard-page .hospital-dashboard-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+    body.hospital-dashboard-page .hospital-dashboard-header { padding: 12px 18px; }
+    body.hospital-dashboard-page .hospital-request-card-content { padding: 22px 18px; }
+    body.hospital-dashboard-page .hospital-request-heading,
+    body.hospital-dashboard-page .hospital-previous-requests { align-items: stretch; flex-direction: column; }
+    body.hospital-dashboard-page .hospital-previous-requests { grid-template-columns: 1fr; }
+    body.hospital-dashboard-page .hospital-id-badge { align-self: flex-start; }
+    body.hospital-dashboard-page .hospital-request-fields { grid-template-columns: 1fr; }
+    body.hospital-dashboard-page .hospital-request-submit button,
+    body.hospital-dashboard-page .hospital-previous-requests > button { width: 100%; justify-content: center; justify-self: stretch; }
+}
+
+/* Centered hospital dashboard layout from the reference design. */
+body.hospital-dashboard-page .hospital-dashboard-header { display: flex; align-items: center; gap: 24px; }
+body.hospital-dashboard-page .hospital-dashboard-nav { display: flex; align-items: center; gap: 24px; }
+body.hospital-dashboard-page .hospital-dashboard-nav { margin-left: auto; }
+body.hospital-dashboard-page .hospital-dashboard-nav a { color: #53617a; font-size: .9rem; font-weight: 600; text-decoration: none; }
+body.hospital-dashboard-page .hospital-dashboard-nav a:hover,
+body.hospital-dashboard-page .hospital-dashboard-nav a.active { color: var(--primary); }
+body.hospital-dashboard-page .hospital-dashboard-nav a.active { padding-bottom: 5px; border-bottom: 2px solid var(--primary); }
+body.hospital-dashboard-page .hospital-dashboard-logout { justify-self: end; }
+body.hospital-dashboard-page .hospital-dashboard-main { width: min(100%, 896px); padding: 48px 24px 72px; }
+body.hospital-dashboard-page .hospital-dashboard-welcome { margin-bottom: 42px; text-align: center; }
+body.hospital-dashboard-page .hospital-dashboard-welcome p:first-child { justify-content: center; }
+body.hospital-dashboard-page .hospital-dashboard-welcome h1 { font-size: clamp(2rem, 5vw, 2.7rem); }
+body.hospital-dashboard-page .hospital-dashboard-content { display: grid; gap: 24px; }
+body.hospital-dashboard-page .hospital-request-column,
+body.hospital-dashboard-page .hospital-side-column { display: contents; }
+body.hospital-dashboard-page .hospital-request-card { border-radius: 8px; box-shadow: 0 8px 24px rgba(24,33,47,.04); }
+body.hospital-dashboard-page .hospital-request-card-content { padding: 28px; }
+body.hospital-dashboard-page .hospital-request-heading { margin-bottom: 26px; }
+body.hospital-dashboard-page .hospital-request-heading h2 { color: #111c2d; font-size: 1.45rem; }
+body.hospital-dashboard-page .hospital-location-alert { background: rgba(255,218,214,.22); }
+body.hospital-dashboard-page .hospital-request-fields { gap: 22px 20px; }
+body.hospital-dashboard-page .hospital-previous-requests { border-radius: 8px; box-shadow: 0 8px 24px rgba(24,33,47,.04); }
+body.hospital-dashboard-page .hospital-previous-requests > button { justify-self: end; }
+body.hospital-dashboard-page #hospital-requests .notification-card { border-radius: 8px; }
+@media (max-width: 760px) {
+    body.hospital-dashboard-page .hospital-dashboard-header { display: flex; gap: 12px; }
+    body.hospital-dashboard-page .hospital-dashboard-nav { display: flex; gap: 10px; margin-left: auto; }
+    body.hospital-dashboard-page .hospital-dashboard-nav a { font-size: .8rem; }
+    body.hospital-dashboard-page .hospital-dashboard-main { padding: 32px 16px 56px; }
+    body.hospital-dashboard-page .hospital-request-heading { flex-direction: column; }
+    body.hospital-dashboard-page .hospital-previous-requests > button { justify-self: stretch; }
 }

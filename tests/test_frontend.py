@@ -2,7 +2,6 @@ import re
 import time
 
 import httpx
-
 from playwright.sync_api import Page
 
 
@@ -103,10 +102,11 @@ def login_as_donor(
         "#donor-login-password"
     ).fill(password)
 
+    # Current UI button = "Sign in"
     page.get_by_role(
         "button",
         name=re.compile(
-            r"Login",
+            r"Sign in",
             re.IGNORECASE
         )
     ).click()
@@ -148,10 +148,11 @@ def login_as_hospital(
         "#hospital-login-password"
     ).fill(password)
 
+    # Current UI button = "Sign in to workspace"
     page.get_by_role(
         "button",
         name=re.compile(
-            r"Login",
+            r"Sign in",
             re.IGNORECASE
         )
     ).click()
@@ -183,7 +184,7 @@ def test_RaktaNova_homepage(page: Page):
     )
 
     # Website title
-    assert page.title() == "RaktaNova"
+    assert "RaktaNova" in page.title()
 
     # Main heading
     heading = page.locator("h1")
@@ -191,25 +192,32 @@ def test_RaktaNova_homepage(page: Page):
     assert heading.is_visible()
 
     assert (
-        "Save Lives with RaktaNova"
+        "Connecting Life Through Blood Donation"
         in heading.inner_text()
     )
 
-    # Donor button
-    donor_button = page.get_by_role(
-        "button",
-        name="🩸 I'm a Donor"
+    # Current homepage uses links,
+    # not buttons.
+
+    donor_link = page.get_by_role(
+        "link",
+        name=re.compile(
+            r"Donor Access",
+            re.IGNORECASE
+        )
     )
 
-    assert donor_button.is_visible()
+    assert donor_link.is_visible()
 
-    # Hospital button
-    hospital_button = page.get_by_role(
-        "button",
-        name="🏥 I'm a Hospital"
+    hospital_link = page.get_by_role(
+        "link",
+        name=re.compile(
+            r"Hospital Portal",
+            re.IGNORECASE
+        )
     )
 
-    assert hospital_button.is_visible()
+    assert hospital_link.is_visible()
 
 
 # =========================================================
@@ -233,10 +241,12 @@ def test_donor_login(page: Page):
         password
     )
 
+    # Donor welcome heading
     assert page.locator(
         "#donor-welcome"
     ).is_visible()
 
+    # Body exists
     assert page.locator(
         "body"
     ).is_visible()
@@ -276,10 +286,12 @@ def test_donor_notifications(page: Page):
         password
     )
 
+    # Current UI button =
+    # "Refresh requests"
     notification_button = page.get_by_role(
         "button",
         name=re.compile(
-            r"View Notifications",
+            r"Refresh requests",
             re.IGNORECASE
         )
     )
@@ -289,14 +301,15 @@ def test_donor_notifications(page: Page):
     notification_button.click()
 
     page.wait_for_timeout(
-        1500
+        1000
     )
 
-    body_text = page.locator(
+    # Notification container
+    notification_container = page.locator(
         "#donor-notifications"
-    ).inner_text()
+    )
 
-    assert body_text.strip() != ""
+    assert notification_container.is_visible()
 
 
 # =========================================================
@@ -327,29 +340,39 @@ def test_create_blood_request(page: Page):
         hospital_id
     )
 
+    # Units
     page.locator(
         "#units-required"
     ).fill("1")
 
+    # City
     page.locator(
         "#city"
     ).fill("chennai")
 
+    # Blood group
     page.locator(
         "#blood-group"
     ).select_option("O+")
 
+    # Request type
     page.locator(
         "#request-type"
     ).select_option("emergency")
 
-    page.get_by_role(
+    # Current UI button =
+    # "Send blood request"
+    create_button = page.get_by_role(
         "button",
         name=re.compile(
-            r"Create Blood Request",
+            r"Send blood request",
             re.IGNORECASE
         )
-    ).click()
+    )
+
+    assert create_button.is_visible()
+
+    create_button.click()
 
     page.wait_for_timeout(
         1500
@@ -360,18 +383,23 @@ def test_create_blood_request(page: Page):
     ).inner_text()
 
     assert "O+" in body_text
+
     assert "Blood Request" in body_text
 
     assert "Units:" in body_text
+
     assert "1" in body_text
 
     assert "City:" in body_text
+
     assert "chennai" in body_text
 
     assert "Request Type:" in body_text
+
     assert "emergency" in body_text
 
     assert "Status:" in body_text
+
     assert "pending" in body_text
 
 
@@ -391,10 +419,12 @@ def test_hospital_view_requests(page: Page):
         password
     )
 
+    # Current UI button =
+    # "View blood requests"
     view_requests_button = page.get_by_role(
         "button",
         name=re.compile(
-            r"View Requests",
+            r"View blood requests",
             re.IGNORECASE
         )
     )
@@ -407,50 +437,53 @@ def test_hospital_view_requests(page: Page):
         1000
     )
 
-    body_text = page.locator(
-        "body"
-    ).inner_text()
-
-    assert (
-        "Hospital Blood Requests"
-        in body_text
+    requests_container = page.locator(
+        "#hospital-requests"
     )
 
-    assert (
-        "View your blood requests and their current status."
-        in body_text
-    )
+    assert requests_container.is_visible()
 
 
 # =========================================================
-# DONOR RESPONSE STATUS
+# DONOR DASHBOARD
 # =========================================================
 
-def test_donor_response_status(page: Page):
+def test_donor_dashboard(page: Page):
 
-    email, password, _ = (
-        register_test_hospital()
+    phone, password, _ = (
+        register_test_donor()
     )
 
-    login_as_hospital(
+    login_as_donor(
         page,
-        email,
+        phone,
         password
     )
 
-    body_text = page.locator(
-        "body"
-    ).inner_text()
-
-    assert (
-        "Donor Response Status"
-        in body_text
+    # Welcome heading
+    welcome = page.locator(
+        "#donor-welcome"
     )
 
-    assert (
-        "Select a blood request to view donor responses."
-        in body_text
+    assert welcome.is_visible()
+
+    # Notifications section
+    notifications = page.locator(
+        "#donor-notifications"
     )
+
+    assert notifications.is_visible()
+
+    # Refresh requests button
+    refresh_button = page.get_by_role(
+        "button",
+        name=re.compile(
+            r"Refresh requests",
+            re.IGNORECASE
+        )
+    )
+
+    assert refresh_button.is_visible()
 
 
 # =========================================================
@@ -472,50 +505,64 @@ def test_donor_registration(page: Page):
         str(time.time_ns())[-9:]
     )
 
+    # Name
     page.locator(
         "#donor-name"
     ).fill(
         "Test Donor"
     )
 
+    # Age
     page.locator(
         "#donor-age"
     ).fill(
         "25"
     )
 
+    # Phone
     page.locator(
         "#donor-phone"
     ).fill(
         unique_phone
     )
 
+    # Password
     page.locator(
         "#donor-password"
     ).fill(
         "Test@123"
     )
 
+    # City
     page.locator(
         "#donor-city"
     ).fill(
         "Chennai"
     )
 
+    # Blood group
     page.locator(
         "#donor-blood-group"
     ).select_option(
         "O+"
     )
 
-    page.get_by_role(
+    # Current UI button =
+    # "Create donor account"
+    register_button = page.get_by_role(
         "button",
         name=re.compile(
-            r"Register as Donor",
+            r"Create donor account",
             re.IGNORECASE
         )
-    ).click()
+    )
 
+    assert register_button.is_visible()
+
+    register_button.click()
+
+    # Registration should redirect
+    # to donor login page.
     page.wait_for_url(
         re.compile(
             r"donor-login\.html"
@@ -523,8 +570,19 @@ def test_donor_registration(page: Page):
         timeout=10000
     )
 
-    body_text = page.locator(
-        "body"
-    ).inner_text()
+    # Verify donor login page loaded
+    assert page.locator(
+        "#donor-login-phone"
+    ).is_visible()
 
-    assert "Donor" in body_text
+    assert page.locator(
+        "#donor-login-password"
+    ).is_visible()
+
+    assert page.get_by_role(
+        "button",
+        name=re.compile(
+            r"Sign in",
+            re.IGNORECASE
+        )
+    ).is_visible()

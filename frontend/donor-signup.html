@@ -1,1 +1,45 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Become a donor | LifeLink AI</title><link rel="stylesheet" href="style.css"></head><body><nav class="navbar"><a class="logo" href="index.html"><span class="brand-mark">+</span> LifeLink AI</a><div class="nav-links"><a href="index.html">Home</a><a href="hospital-signup.html">Hospital</a></div></nav><main class="auth-page"><div class="auth-wrap"><header class="page-title"><div class="eyebrow">Donor registration</div><h2>Be ready to help</h2><p>Your profile helps hospitals find eligible nearby donors during a request.</p></header><section class="auth-card"><h3>Create your donor account</h3><p class="subtitle">Please provide accurate details for matching.</p><div class="field-row"><div class="field"><label for="donor-name">Full name</label><input id="donor-name" type="text" autocomplete="name" placeholder="Enter your full name"></div><div class="field"><label for="donor-age">Age</label><input id="donor-age" type="number" min="1" max="100" placeholder="Enter your age"></div></div><div class="field-row"><div class="field"><label for="donor-blood-group">Blood group</label><select id="donor-blood-group"><option value="">Select blood group</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div><div class="field"><label for="donor-phone">Phone number</label><input id="donor-phone" type="tel" autocomplete="tel" placeholder="Enter phone number"></div></div><div class="field-row"><div class="field"><label for="donor-password">Password</label><input id="donor-password" type="password" autocomplete="new-password" placeholder="Create password"></div><div class="field"><label for="donor-city">City</label><input id="donor-city" type="text" autocomplete="address-level2" placeholder="Enter city"></div></div><div class="location-box"><p id="donor-location-status">Location is optional, but improves nearby matching.</p><button class="secondary" type="button" onclick="captureDonorLocation()">Use my current location</button></div><div class="form-actions"><button type="button" onclick="registerDonorPage()">Create donor account</button></div><div id="donor-signup-message" class="message" aria-live="polite"></div><p class="auth-footer">Already registered? <a href="donor-login.html">Sign in</a></p></section></div></main><script src="donor-pages.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>RaktaNova - Create your donor account</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar signup-nav" aria-label="Registration navigation">
+        <a class="logo" href="index.html"><span class="brand-mark" aria-hidden="true">+</span> RaktaNova</a>
+        <a class="cancel-link" href="index.html"><span aria-hidden="true">×</span> Cancel</a>
+    </nav>
+    <main class="auth-page">
+        <div class="auth-wrap">
+            <section class="auth-card" aria-labelledby="signup-heading">
+                <header class="signup-heading">
+                    <h1 id="signup-heading">Create your donor account</h1>
+                    <p>Enter the details used for donor matching. All fields marked <span aria-hidden="true">*</span> are required.</p>
+                </header>
+                <div class="field"><label for="donor-name">Full name</label><input id="donor-name" type="text" autocomplete="name" placeholder="John Doe"></div>
+                <div class="field-row">
+                    <div class="field"><label for="donor-age">Age</label><input id="donor-age" type="number" min="18" max="65" placeholder="e.g. 30"></div>
+                    <div class="field"><label for="donor-blood-group">Blood group</label><select id="donor-blood-group"><option value="">Select group</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+                </div>
+                <div class="field-row">
+                    <div class="field"><label for="donor-phone">Phone number</label><input id="donor-phone" type="tel" autocomplete="tel" placeholder="(555) 000-0000"></div>
+                    <div class="field"><label for="donor-city">City</label><input id="donor-city" type="text" autocomplete="address-level2" placeholder="e.g. New York"></div>
+                </div>
+                <div class="field-row">
+                    <div class="field full-field"><label for="donor-password">Password</label><input id="donor-password" type="password" autocomplete="new-password" placeholder="Create password" aria-describedby="donor-password-help"><small id="donor-password-help">Use at least 4 characters.</small></div>
+                </div>
+                <section class="location-box" aria-labelledby="location-heading">
+                    <div class="location-copy"><strong id="location-heading">Improve nearby matching</strong><p id="donor-location-status">Location is optional, but improves nearby matching.</p></div>
+                    <button class="secondary" type="button" onclick="captureDonorLocation()"><span aria-hidden="true">⌖</span> Use my current location</button>
+                </section>
+                <div class="form-actions"><button type="button" onclick="registerDonorPage()">Create donor account</button></div>
+                <div id="donor-signup-message" class="message" aria-live="polite"></div>
+                <p class="auth-footer">Already registered? <a href="donor-login.html">Sign in</a></p>
+            </section>
+        </div>
+    </main>
+    <script src="donor-pages.js"></script>
+</body>
+</html>

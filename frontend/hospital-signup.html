@@ -1,1 +1,51 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Register hospital | LifeLink AI</title><link rel="stylesheet" href="style.css"></head><body><nav class="navbar"><a class="logo" href="index.html"><span class="brand-mark">+</span> LifeLink AI</a><div class="nav-links"><a href="index.html">Home</a><a href="hospital-login.html">Sign in</a></div></nav><main class="auth-page"><div class="auth-wrap"><header class="page-title"><div class="eyebrow">Hospital registration</div><h2>Set up your workspace</h2><p>Create a hospital account to coordinate blood requests with nearby donors.</p></header><section class="auth-card"><h3>Hospital details</h3><div class="field"><label for="hospital-name">Hospital name</label><input id="hospital-name" type="text" placeholder="Enter hospital name"></div><div class="field-row"><div class="field"><label for="hospital-email">Email</label><input id="hospital-email" type="email" autocomplete="email" placeholder="Enter hospital email"></div><div class="field"><label for="hospital-phone">Phone number</label><input id="hospital-phone" type="tel" autocomplete="tel" placeholder="Enter phone number"></div></div><div class="field-row"><div class="field"><label for="hospital-password">Password</label><input id="hospital-password" type="password" autocomplete="new-password" placeholder="Create password"></div><div class="field"><label for="hospital-city">City</label><input id="hospital-city" type="text" placeholder="Enter city"></div></div><div class="field"><label for="hospital-address">Hospital address</label><textarea id="hospital-address" placeholder="Enter hospital address"></textarea></div><div class="field"><label for="available-blood-groups">Available blood groups</label><input id="available-blood-groups" type="text" placeholder="Example: A+, B+, O+"></div><div class="form-actions"><button type="button" onclick="hospitalSignup()">Create hospital account</button></div><p id="hospital-signup-message" class="message" aria-live="polite"></p><p class="auth-footer">Already registered? <a href="hospital-login.html">Sign in</a></p></section></div></main><script src="script.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RaktaNova - Hospital Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="hospital-signup-page">
+    <header class="hospital-signup-header">
+        <a class="logo" href="index.html"><span class="brand-mark" aria-hidden="true">◊</span> RaktaNova</a>
+        <nav class="hospital-signup-nav" aria-label="Hospital registration navigation">
+            <a href="index.html">Home</a>
+            <a href="hospital-login.html">Sign In</a>
+        </nav>
+    </header>
+    <main class="hospital-signup-main">
+        <section class="hospital-signup-card" aria-labelledby="hospital-signup-heading">
+            <header class="hospital-signup-heading">
+                <div class="hospital-icon" aria-hidden="true">◊</div>
+                <h1 id="hospital-signup-heading">Hospital registration</h1>
+                <p>Set up your workspace. Create a hospital account to coordinate blood requests with nearby donors.</p>
+            </header>
+            <div class="hospital-signup-form">
+                <section class="hospital-form-section" aria-labelledby="hospital-details-heading">
+                    <h2 id="hospital-details-heading"><span aria-hidden="true"></span> Hospital details</h2>
+                    <div class="hospital-form-grid">
+                        <div class="hospital-field full-field"><label for="hospital-name">Hospital name</label><div class="hospital-input"><span aria-hidden="true">&#9633;</span><input id="hospital-name" type="text" placeholder="e.g. City General Hospital"></div></div>
+                        <div class="hospital-field"><label for="hospital-email">Work Email</label><div class="hospital-input"><span aria-hidden="true">&#9993;</span><input id="hospital-email" type="email" autocomplete="email" placeholder="admin@hospital.com"></div></div>
+                        <div class="hospital-field"><label for="hospital-phone">Phone number</label><div class="hospital-input"><span aria-hidden="true">&#9742;</span><input id="hospital-phone" type="tel" autocomplete="tel" placeholder="+1 (555) 000-0000"></div></div>
+                        <div class="hospital-field full-field"><label for="hospital-password">Password</label><div class="hospital-input"><span aria-hidden="true">&#128274;</span><input id="hospital-password" type="password" autocomplete="new-password" placeholder="Create a secure password"></div><small>Must be at least 8 characters long.</small></div>
+                        <div class="hospital-field full-field"><label for="hospital-city">City</label><div class="hospital-input"><span aria-hidden="true">&#9633;</span><input id="hospital-city" type="text" placeholder="e.g. New York"></div></div>
+                        <div class="hospital-field full-field"><label for="hospital-address">Hospital address</label><div class="hospital-input hospital-textarea"><span aria-hidden="true">&#9873;</span><textarea id="hospital-address" placeholder="Full street address..." rows="3"></textarea></div></div>
+                    </div>
+                </section>
+                <hr>
+                <section class="hospital-form-section" aria-labelledby="blood-groups-heading">
+                    <h2 id="blood-groups-heading"><span aria-hidden="true">+</span> Priority Blood Groups Required</h2>
+                    <div class="blood-group-field"><label for="available-blood-groups">Available blood groups</label><input id="available-blood-groups" type="text" placeholder="Example: A+, B+, O+"></div>
+                </section>
+                <div class="hospital-submit-area">
+                    <button type="button" onclick="hospitalSignup()">Create hospital account</button>
+                    <div id="hospital-signup-message" class="message" aria-live="polite"></div>
+                    <a href="hospital-login.html">Already registered? Sign in</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
