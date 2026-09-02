@@ -1,4 +1,4 @@
-const DONOR_API_URL = "http://127.0.0.1:8000";
+const DONOR_API_URL = "https://raktanova-backend.onrender.com";
 
 const DONOR_VAPID_PUBLIC_KEY =
     "BATkLbDGETZD-IlWwmdQhrDkSRTmShmgGoMV2IeroAKc2DHEinkXRue4XrUiK0Oc7bUqho3NllLlqy2Plz0rCwE";

@@ -1,7 +1,7 @@
 console.log("SCRIPT LOADED");
 
 
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = "https://raktanova-backend.onrender.com";
 
 
 // Holds GPS captured for the donor registration form
