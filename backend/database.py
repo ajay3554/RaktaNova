@@ -1,12 +1,12 @@
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, declarative_base
-
+import os
 
 # =========================================================
 # DATABASE URL
 # =========================================================
 
-DATABASE_URL = "postgresql://postgres:987654321@localhost:5432/lifelink_db"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 # =========================================================
