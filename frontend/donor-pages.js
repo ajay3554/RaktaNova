@@ -1249,6 +1249,15 @@ async function loadDonorNotificationsPage() {
 
 
 // =====================================================
+function getDonorNotificationMessage(message) {
+    return (message || "A hospital is requesting blood.")
+        .replace(/^\s*🏆?\s*Top AI Match\s*[-\u2014]\s*/i, "")
+        .replace(/\s*\[(?:HIGH|NORMAL) PRIORITY\]\s*:/i, ":")
+        .replace(/\s*[-\u2014]\s*AI Match Score:\s*[\d.]+\/100\s*$/i, "")
+        .trim();
+}
+
+
 // RENDER DONOR NOTIFICATIONS
 // =====================================================
 
@@ -1383,7 +1392,7 @@ function renderDonorNotificationsPage(
 
 
                 <p>
-                    ${notification.message || "A hospital is requesting blood."}
+                    ${getDonorNotificationMessage(notification.message)}
                 </p>
 
 
@@ -1415,26 +1424,6 @@ function renderDonorNotificationsPage(
                         <br>
 
                         ${notification.request_type || "-"}
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>Match Score</strong>
-                        <br>
-
-                        ${notification.match_score ?? "N/A"}
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>Match Rank</strong>
-                        <br>
-
-                        ${notification.match_rank ?? "N/A"}
 
                     </div>
 

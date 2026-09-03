@@ -111,7 +111,7 @@ body:has(#donor-welcome) .notification-card { position: relative; padding: 20px;
 body:has(#donor-welcome) .notification-card[data-priority="emergency"] { border-left-color: var(--primary); }
 body:has(#donor-welcome) .notification-card[data-priority="shortage"] { border-left-color: #ad6a09; }
 body:has(#donor-welcome) .notification-card::before { display: inline-flex; margin-bottom: 12px; padding: 5px 8px; border-radius: 99px; color: #6e2735; background: var(--primary-soft); content: "Blood request"; font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
-body:has(#donor-welcome) .notification-card[data-priority="emergency"]::before { content: "Emergency request"; }
+body:has(#donor-welcome) .notification-card[data-priority="emergency"]::before { color: #fff; background: var(--primary); content: "Emergency request"; }
 body:has(#donor-welcome) .notification-card[data-priority="shortage"]::before { color: #704000; background: #fff3dc; content: "Blood shortage"; }
 body:has(#donor-welcome) .notification-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 body:has(#donor-welcome) .notification-meta div { min-height: 72px; }

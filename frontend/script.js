@@ -735,13 +735,6 @@ async function getNotifications() {
 
                     <p>
                         <strong>
-                            Priority:
-                        </strong>
-                        ${notification.priority_text || "-"}
-                    </p>
-
-                    <p>
-                        <strong>
                             Distance:
                         </strong>
                         ${
@@ -750,19 +743,6 @@ async function getNotifications() {
                                     notification.distance_km
                                   ).toFixed(2) + " km"
                                 : "Not available"
-                        }
-                    </p>
-
-                    <p>
-                        <strong>
-                            Match Score:
-                        </strong>
-                        ${
-                            notification.match_score != null
-                                ? Number(
-                                    notification.match_score
-                                  ).toFixed(2)
-                                : "N/A"
                         }
                     </p>
 

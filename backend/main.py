@@ -1653,21 +1653,17 @@ def create_blood_request(
         donor = entry["donor"]
         distance_km = entry["distance_km"]
         score = entry["score"]
-        rank_tag = "🏆 Top AI Match — " if rank == 1 else ""
-
         if distance_km is not None:
             message = (
-                f"{rank_tag}{alert_text} [{priority_text}]: "
+                f"{alert_text}: "
                 f"{blood_group} blood required "
-                f"at {hospital.name} (~{round(distance_km, 1)} km away) "
-                f"— AI Match Score: {score}/100"
+                f"at {hospital.name} (~{round(distance_km, 1)} km away)"
             )
         else:
             message = (
-                f"{rank_tag}{alert_text} [{priority_text}]: "
+                f"{alert_text}: "
                 f"{blood_group} blood required "
-                f"at {hospital.name} "
-                f"— AI Match Score: {score}/100"
+                f"at {hospital.name}"
             )
 
         notification = Notification(
