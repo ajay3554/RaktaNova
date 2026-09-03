@@ -1360,7 +1360,7 @@ async function getHospitalRequests() {
                         "accepted-donor";
 
                     acceptedDonor.textContent =
-                        `Accepted donor: ${request.accepted_donor.name} (${request.accepted_donor.blood_group})`;
+                        `Accepted donor: ${request.accepted_donor.name} (${request.accepted_donor.blood_group}) | Contact number: ${request.accepted_donor.phone || "Not available"}`;
 
                     card.appendChild(acceptedDonor);
                 }

@@ -6,7 +6,7 @@ import os
 # DATABASE URL
 # =========================================================
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE_URL") or "sqlite:///./rakta_nova.db"
 
 
 # =========================================================
@@ -143,6 +143,7 @@ def migrate_database():
 # =========================================================
 
 try:
-    migrate_database()
+    if engine.dialect.name == "postgresql":
+        migrate_database()
 except Exception as error:
     print("Database migration warning:", error)
