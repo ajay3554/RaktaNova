@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Donor Login - RaktaNova</title>
+     <link rel="icon" type="image/png" href="logo.png">
+     <link rel="stylesheet" href="style.css">
+</head>
+<body class="donor-login-page">
+     <header class="login-header">
+          <a class="logo" href="index.html"><img class="brand-logo" src="logo.png" alt="RaktaNova"> RaktaNova</a>
+          <nav class="login-actions" aria-label="Donor login navigation">
+               <a href="index.html">Home</a>
+               <a class="login-signup" href="donor-signup.html">Sign Up</a>
+          </nav>
+     </header>
+     <main class="login-main">
+          <section class="login-card" aria-labelledby="login-heading">
+               <div class="login-intro">
+                    <div class="login-logo"><img src="logo.png" alt="RaktaNova"></div>
+                    <h1 id="login-heading">Welcome back</h1>
+                    <p>Sign in to view nearby blood requests and manage your availability.</p>
+               </div>
+               <div class="login-divider"><span>Donor sign in</span></div>
+               <p class="login-helper">Use the phone number registered with RaktaNova.</p>
+               <div class="login-fields">
+                    <div class="login-field">
+                         <label for="donor-login-phone">Mobile number <span class="req" aria-hidden="true">*</span></label>
+                         <div class="input-with-icon"><span aria-hidden="true">&#9742;</span><input id="donor-login-phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="Enter 10-digit mobile number" aria-describedby="donor-login-phone-error" aria-required="true"></div>
+                         <p class="field-error" id="donor-login-phone-error" role="alert"></p>
+                    </div>
+                    <div class="login-field">
+                         <label for="donor-login-password">Password</label>
+                         <div class="input-with-icon"><span aria-hidden="true">&#128274;</span><input id="donor-login-password" type="password" autocomplete="current-password" placeholder="Enter your password"></div>
+                         <a class="forgot-link" href="#">Forgot password?</a>
+                    </div>
+               </div>
+            <div class="login-submit"><button type="button" onclick="donorLoginPage()">Sign in <span aria-hidden="true">&#8594;</span></button></div>
+            <div id="donor-login-message" class="message" aria-live="polite"></div>
+            <p class="auth-footer">New to RaktaNova? <a href="donor-signup.html">Create a donor account</a></p>
+          </section>
+     </main>
+     <script src="form-validation.js"></script>
+     <script src="donor-pages.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>RaktaNova - Create your donor account</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar signup-nav" aria-label="Registration navigation">
+        <a class="logo" href="index.html"><img class="brand-logo" src="logo.png" alt="RaktaNova"> RaktaNova</a>
+        <a class="cancel-link" href="index.html"><span aria-hidden="true">×</span> Cancel</a>
+    </nav>
+    <main class="auth-page">
+        <div class="auth-wrap">
+            <section class="auth-card" aria-labelledby="signup-heading">
+                <header class="signup-heading">
+                    <h1 id="signup-heading">Create your donor account</h1>
+                    <p>Enter the details used for donor matching. All fields marked <span aria-hidden="true">*</span> are required.</p>
+                </header>
+                <div class="field">
+                    <label for="donor-name">Full name <span class="req" aria-hidden="true">*</span></label>
+                    <input id="donor-name" type="text" autocomplete="name" placeholder="Enter your full name" aria-describedby="donor-name-error" aria-required="true">
+                    <p class="field-error" id="donor-name-error" role="alert"></p>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="donor-age">Age <span class="req" aria-hidden="true">*</span></label>
+                        <input id="donor-age" type="number" min="18" max="60" step="1" inputmode="numeric" placeholder="Select your age (18–60)" aria-describedby="donor-age-error" aria-required="true">
+                        <p class="field-error" id="donor-age-error" role="alert"></p>
+                    </div>
+                    <div class="field">
+                        <label for="donor-blood-group">Blood group <span class="req" aria-hidden="true">*</span></label>
+                        <select id="donor-blood-group" aria-required="true"><option value="">Select group</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select>
+                    </div>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="donor-phone">Mobile number <span class="req" aria-hidden="true">*</span></label>
+                        <input id="donor-phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="Enter 10-digit mobile number" aria-describedby="donor-phone-error" aria-required="true">
+                        <p class="field-error" id="donor-phone-error" role="alert"></p>
+                    </div>
+                    <div class="field">
+                        <label for="donor-city">City <span class="req" aria-hidden="true">*</span></label>
+                        <input id="donor-city" type="text" autocomplete="address-level2" placeholder="e.g. New York">
+                    </div>
+                </div>
+                <div class="field-row">
+                    <div class="field full-field">
+                        <label for="donor-password">Password <span class="req" aria-hidden="true">*</span></label>
+                        <input id="donor-password" type="password" autocomplete="new-password" placeholder="Create password" aria-describedby="donor-password-help">
+                        <small id="donor-password-help">Use at least 4 characters.</small>
+                    </div>
+                </div>
+                <section class="location-box" aria-labelledby="location-heading">
+                    <div class="location-copy"><strong id="location-heading">Improve nearby matching</strong><p id="donor-location-status">Location is optional, but improves nearby matching.</p></div>
+                    <button class="secondary" type="button" onclick="captureDonorLocation()"><span aria-hidden="true">⌖</span> Use my current location</button>
+                </section>
+                <div class="form-actions"><button type="button" onclick="registerDonorPage()">Create donor account</button></div>
+                <div id="donor-signup-message" class="message" aria-live="polite"></div>
+                <p class="auth-footer">Already registered? <a href="donor-login.html">Sign in</a></p>
+            </section>
+        </div>
+    </main>
+    <script src="form-validation.js"></script>
+    <script src="donor-pages.js"></script>
+</body>
+</html>

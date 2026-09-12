@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Donor Dashboard - RaktaNova</title>
+	<link rel="icon" type="image/png" href="logo.png">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body class="donor-dashboard-page">
+	<nav class="navbar donor-dashboard-nav" aria-label="Donor navigation">
+		<a class="logo" href="index.html"><img class="brand-logo" src="logo.png" alt="RaktaNova"> RaktaNova</a>
+		<div class="nav-links"><a class="donor-logout" href="#" onclick="donorLogoutPage();return false;">Logout</a></div>
+	</nav>
+	<main class="dashboard-page">
+		<header class="page-heading donor-welcome-heading">
+			<h1 id="donor-welcome">Welcome, Donor</h1>
+			<p id="donor-profile-subtitle"><span aria-hidden="true">●</span> Your donation availability and nearby requests in one place.</p>
+		</header>
+		<div class="donor-dashboard-grid">
+			<div class="donor-sidebar-content">
+				<section id="profile" class="profile-card donor-panel">
+					<h2>Your donor profile</h2>
+					<p>Keep your details and location current for accurate matching.</p>
+					<dl class="donor-profile-list">
+						<div><dt>Donor ID</dt><dd id="donor-display-id">-</dd></div>
+						<div><dt>Blood group</dt><dd id="donor-display-blood">-</dd></div>
+						<div><dt>Phone</dt><dd id="donor-display-phone">-</dd></div>
+						<div><dt>City</dt><dd id="donor-display-city">-</dd></div>
+					</dl>
+				</section>
+				<section class="feature-card donor-panel donor-location-panel">
+					<h2>Location &amp; alerts</h2>
+					<p>RaktaNova uses your approximate location to find nearby blood requests.</p>
+					<div id="donor-dashboard-location" class="location-status">Checking your location...</div>
+					<div class="action-row"><button type="button" onclick="updateDonorLocationPage()">Update my location</button></div>
+				</section>
+			</div>
+			<section id="requests" class="feature-card donor-panel donor-requests-panel">
+				<div class="donor-requests-heading">
+					<div>
+						<h2><span aria-hidden="true">!</span> Blood requests</h2>
+						<p>Emergency requests are shown here. Review each request before accepting or declining.</p>
+					</div>
+					<button type="button" onclick="loadDonorNotificationsPage()"><span aria-hidden="true">&#8635;</span> Refresh requests</button>
+				</div>
+				<div id="donor-notifications"><div class="empty-state">No requests loaded yet. Select &quot;Refresh requests&quot; to check.</div></div>
+			</section>
+		</div>
+	</main>
+	<script src="donor-pages.js"></script>
+</body>
+</html>

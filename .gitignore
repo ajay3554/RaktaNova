@@ -1,0 +1,8 @@
+.DS_Store
+.vscode/
+__pycache__/
+*.py[cod]
+*.db
+backend/venv/
+private_key.pem
+backend/private_key.pem
