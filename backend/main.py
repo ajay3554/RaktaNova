@@ -34,6 +34,7 @@ from backend.schemas import (
     validate_hospital_name,
     validate_landline_phone,
     validate_optional_personal_phone,
+    validate_blood_groups,
 )
 
 
@@ -1096,6 +1097,7 @@ def hospital_signup(
 
     phone = hospital_data.get("phone")
     personal_phone = hospital_data.get("personal_phone")
+    available_blood_groups = hospital_data.get("available_blood_groups")
     city = hospital_data.get("city")
     address = hospital_data.get("address")
 
@@ -1110,6 +1112,7 @@ def hospital_signup(
         name = validate_hospital_name(name)
         phone = validate_landline_phone(phone)
         personal_phone = validate_optional_personal_phone(personal_phone)
+        available_blood_groups = validate_blood_groups(available_blood_groups)
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error))
 
@@ -1194,6 +1197,7 @@ def hospital_signup(
         password=hashed_password,
         phone=phone,
         personal_phone=personal_phone,
+        available_blood_groups=available_blood_groups,
         city=city.strip() if city else None,
         address=address.strip() if address else None,
         latitude=(
@@ -1383,6 +1387,9 @@ def create_hospital(
 
     try:
         name = validate_hospital_name(name)
+        available_blood_groups = validate_blood_groups(
+            available_blood_groups
+        )
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error))
 

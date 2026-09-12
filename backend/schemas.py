@@ -24,6 +24,7 @@ NAME_ERROR = "Name can contain letters and spaces only."
 MOBILE_ERROR = "Enter a valid 10-digit Indian mobile number."
 HOSPITAL_NAME_ERROR = "Hospital name must be text only."
 LANDLINE_ERROR = "Enter a valid landline number."
+BLOOD_GROUPS_ERROR = "Enter valid blood groups separated by commas."
 AGE_ERROR = "Age must be between 18 and 60."
 DUPLICATE_MOBILE_ERROR = "This mobile number is already registered."
 
@@ -105,6 +106,21 @@ def validate_optional_personal_phone(value: Any) -> Optional[str]:
         return None
 
     return validate_indian_mobile(value)
+
+
+def validate_blood_groups(value: Any) -> str:
+    if not isinstance(value, str):
+        raise ValueError(BLOOD_GROUPS_ERROR)
+
+    groups = [group.strip().upper() for group in value.split(",")]
+    if (
+        not groups
+        or any(group not in VALID_BLOOD_GROUPS for group in groups)
+        or len(set(groups)) != len(groups)
+    ):
+        raise ValueError(BLOOD_GROUPS_ERROR)
+
+    return ", ".join(groups)
 
 
 def validate_donor_age(value: Any) -> int:

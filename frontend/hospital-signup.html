@@ -38,7 +38,7 @@
                 <hr>
                 <section class="hospital-form-section" aria-labelledby="blood-groups-heading">
                     <h2 id="blood-groups-heading"><span aria-hidden="true">+</span> Priority Blood Groups Required</h2>
-                    <div class="blood-group-field"><label for="available-blood-groups">Available blood groups</label><input id="available-blood-groups" type="text" placeholder="Example: A+, B+, O+"></div>
+                    <div class="blood-group-field"><label for="available-blood-groups">Available blood groups</label><input id="available-blood-groups" type="text" required list="blood-group-options" placeholder="Example: A+, B+, O+"><datalist id="blood-group-options"><option value="A+"><option value="A-"><option value="B+"><option value="B-"><option value="AB+"><option value="AB-"><option value="O+"><option value="O-"></datalist><small>Use valid groups separated by commas.</small></div>
                 </section>
                 <div class="hospital-submit-area">
                     <button type="button" onclick="hospitalSignup()">Create hospital account</button>

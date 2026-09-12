@@ -1919,7 +1919,7 @@ async function hospitalSignup() {
         );
 
 
-    if (!name || !email || !phone || !password || !city) {
+    if (!name || !email || !phone || !password || !city || !bloodGroups) {
 
         message.textContent =
             "Please fill all required fields.";
@@ -1952,6 +1952,21 @@ async function hospitalSignup() {
     if (personalPhone && !/^[6-9]\d{9}$/.test(personalPhone)) {
         message.textContent =
             "Enter a valid 10-digit personal mobile number.";
+        return;
+    }
+
+    const validBloodGroups = new Set([
+        "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"
+    ]);
+    const requestedBloodGroups = bloodGroups
+        .split(",")
+        .map((group) => group.trim().toUpperCase());
+    if (
+        requestedBloodGroups.some((group) => !validBloodGroups.has(group)) ||
+        new Set(requestedBloodGroups).size !== requestedBloodGroups.length
+    ) {
+        message.textContent =
+            "Enter valid blood groups separated by commas.";
         return;
     }
 
