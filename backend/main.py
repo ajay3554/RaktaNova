@@ -1381,6 +1381,11 @@ def create_hospital(
             detail="Hospital name is required"
         )
 
+    try:
+        name = validate_hospital_name(name)
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+
 
     hospital = Hospital(
 

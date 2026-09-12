@@ -66,7 +66,11 @@ def validate_hospital_name(value: Any) -> str:
         raise ValueError(HOSPITAL_NAME_ERROR)
 
     name = value.strip()
-    if not name or PLAIN_TEXT_PATTERN.search(name):
+    if (
+        not name
+        or not re.search(r"[A-Za-z]", name)
+        or PLAIN_TEXT_PATTERN.search(name)
+    ):
         raise ValueError(HOSPITAL_NAME_ERROR)
 
     return name
