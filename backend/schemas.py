@@ -6,6 +6,7 @@ from pydantic import BaseModel, ConfigDict, field_validator, ValidationError
 
 PERSON_NAME_PATTERN = re.compile(r"^[A-Za-z]+(?: [A-Za-z]+)*$")
 INDIAN_MOBILE_PATTERN = re.compile(r"^[6-9]\d{9}$")
+LANDLINE_FORMAT_PATTERN = re.compile(r"^\+?[0-9][0-9 ()-]*[0-9]$")
 PLAIN_TEXT_PATTERN = re.compile(r"[<>]")
 
 VALID_BLOOD_GROUPS = {
@@ -21,6 +22,8 @@ VALID_BLOOD_GROUPS = {
 
 NAME_ERROR = "Name can contain letters and spaces only."
 MOBILE_ERROR = "Enter a valid 10-digit Indian mobile number."
+HOSPITAL_NAME_ERROR = "Hospital name must be text only."
+LANDLINE_ERROR = "Enter a valid landline number."
 AGE_ERROR = "Age must be between 18 and 60."
 DUPLICATE_MOBILE_ERROR = "This mobile number is already registered."
 
@@ -56,6 +59,48 @@ def validate_indian_mobile(value: Any) -> str:
         raise ValueError(MOBILE_ERROR)
 
     return phone
+
+
+def validate_hospital_name(value: Any) -> str:
+    if not isinstance(value, str):
+        raise ValueError(HOSPITAL_NAME_ERROR)
+
+    name = value.strip()
+    if not name or PLAIN_TEXT_PATTERN.search(name):
+        raise ValueError(HOSPITAL_NAME_ERROR)
+
+    return name
+
+
+def validate_landline_phone(value: Any) -> str:
+    if not isinstance(value, str):
+        raise ValueError(LANDLINE_ERROR)
+
+    phone = value.strip()
+    digits = re.sub(r"\D", "", phone)
+    is_indian_mobile = (
+        len(digits) == 10
+        and digits[0] in "6789"
+    ) or (
+        len(digits) == 12
+        and digits.startswith("91")
+        and digits[2] in "6789"
+    )
+    if (
+        not LANDLINE_FORMAT_PATTERN.fullmatch(phone)
+        or not 7 <= len(digits) <= 15
+        or is_indian_mobile
+    ):
+        raise ValueError(LANDLINE_ERROR)
+
+    return phone
+
+
+def validate_optional_personal_phone(value: Any) -> Optional[str]:
+    if value in (None, ""):
+        return None
+
+    return validate_indian_mobile(value)
 
 
 def validate_donor_age(value: Any) -> int:

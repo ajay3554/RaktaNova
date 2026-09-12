@@ -73,6 +73,8 @@ class Hospital(Base):
 
     phone = Column(String(20))
 
+    personal_phone = Column(String(20), nullable=True)
+
     city = Column(String(100))
 
     address = Column(String)

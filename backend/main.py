@@ -31,6 +31,9 @@ from backend.schemas import (
     DonorRegisterRequest,
     DUPLICATE_MOBILE_ERROR,
     first_validation_message,
+    validate_hospital_name,
+    validate_landline_phone,
+    validate_optional_personal_phone,
 )
 
 
@@ -266,6 +269,21 @@ try:
 
         else:
             print("Hospital password column already exists.")
+
+        if "personal_phone" not in hospital_columns:
+
+            with engine.begin() as connection:
+
+                connection.execute(
+                    text(
+                        """
+                        ALTER TABLE hospitals
+                        ADD COLUMN personal_phone VARCHAR(20)
+                        """
+                    )
+                )
+
+            print("Hospital personal phone column added successfully.")
 
     # -----------------------------------------------------
     # NOTIFICATIONS TABLE
@@ -1077,6 +1095,7 @@ def hospital_signup(
     confirm_password = hospital_data.get("confirm_password")
 
     phone = hospital_data.get("phone")
+    personal_phone = hospital_data.get("personal_phone")
     city = hospital_data.get("city")
     address = hospital_data.get("address")
 
@@ -1086,6 +1105,13 @@ def hospital_signup(
     # -----------------------------------------------------
     # REQUIRED FIELD VALIDATION
     # -----------------------------------------------------
+
+    try:
+        name = validate_hospital_name(name)
+        phone = validate_landline_phone(phone)
+        personal_phone = validate_optional_personal_phone(personal_phone)
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
 
     if not name:
         raise HTTPException(
@@ -1121,12 +1147,6 @@ def hospital_signup(
         raise HTTPException(
             status_code=400,
             detail="Password must contain at least 6 characters"
-        )
-
-    if not phone:
-        raise HTTPException(
-            status_code=400,
-            detail="Phone number is required"
         )
 
     if not city:
@@ -1172,7 +1192,8 @@ def hospital_signup(
         name=name.strip(),
         email=email,
         password=hashed_password,
-        phone=phone.strip() if phone else None,
+        phone=phone,
+        personal_phone=personal_phone,
         city=city.strip() if city else None,
         address=address.strip() if address else None,
         latitude=(
@@ -1218,6 +1239,7 @@ def hospital_signup(
         "name": hospital.name,
         "email": hospital.email,
         "phone": hospital.phone,
+        "personal_phone": hospital.personal_phone,
         "city": hospital.city,
         "latitude": hospital.latitude,
         "longitude": hospital.longitude

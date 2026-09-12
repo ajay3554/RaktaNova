@@ -727,7 +727,7 @@ async function getNotifications() {
 
                 card.className =
                     "card notification-card";
-                
+
                 card.id =
                    `notification-${notification.id}`;
 
@@ -1888,6 +1888,11 @@ async function hospitalSignup() {
             "hospital-phone"
         ).value.trim();
 
+    const personalPhone =
+        document.getElementById(
+            "hospital-personal-phone"
+        ).value.trim();
+
     const password =
         document.getElementById(
             "hospital-password"
@@ -1914,17 +1919,39 @@ async function hospitalSignup() {
         );
 
 
-    if (
-        !name ||
-        !email ||
-        !phone ||
-        !password ||
-        !city
-    ) {
+    if (!name || !email || !phone || !password || !city) {
 
         message.textContent =
             "Please fill all required fields.";
 
+        return;
+    }
+
+    if (/^\d+$/.test(name)) {
+        message.textContent = "Hospital name must be text only.";
+        return;
+    }
+
+    const landlineDigits = phone.replace(/\D/g, "");
+    const isIndianMobile =
+        (landlineDigits.length === 10 &&
+            /^[6-9]/.test(landlineDigits)) ||
+        (landlineDigits.length === 12 &&
+            landlineDigits.startsWith("91") &&
+            /^[6-9]/.test(landlineDigits.slice(2)));
+    if (
+        !/^\+?[0-9][0-9 ()-]*[0-9]$/.test(phone) ||
+        landlineDigits.length < 7 ||
+        landlineDigits.length > 15 ||
+        isIndianMobile
+    ) {
+        message.textContent = "Enter a valid landline number.";
+        return;
+    }
+
+    if (personalPhone && !/^[6-9]\d{9}$/.test(personalPhone)) {
+        message.textContent =
+            "Enter a valid 10-digit personal mobile number.";
         return;
     }
 
@@ -1963,6 +1990,8 @@ async function hospitalSignup() {
                         confirm_password: password,
 
                         phone: phone,
+
+                        personal_phone: personalPhone || null,
 
                         city: city,
 
